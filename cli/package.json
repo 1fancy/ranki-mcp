@@ -17,10 +17,10 @@
   "homepage": "https://mcp.ranki.io",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/1fancy/ranki-mcp.git",
+    "url": "git+https://github.com/1fancy/seo-aeo-audit-mcp-ranki.git",
     "directory": "cli"
   },
-  "bugs": "https://github.com/1fancy/ranki-mcp/issues",
+  "bugs": "https://github.com/1fancy/seo-aeo-audit-mcp-ranki/issues",
   "license": "MIT",
   "author": "Ranki.io <hello@ranki.io>"
 }

@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <!-- ============== PRIMARY SEO ============== -->
-<title>Free SEO Audit Tool for Cursor, Claude Code & Windsurf — Ranki MCP</title>
-<meta name="description" content="Free SEO audit and content tool for vibe coders. Generate sitemap.xml, llms.txt, robots.txt, FAQPage schema. Works in Cursor, Claude Code, Windsurf, ChatGPT Desktop, Claude.ai. MCP server plus Claude Skill plus REST API.">
+<title>Free SEO and AEO Audit Tool for Cursor, Claude Code & Windsurf — Ranki MCP</title>
+<meta name="description" content="Free MCP server that turns Cursor, Claude Code, Windsurf and ChatGPT Desktop into a senior SEO and AEO consultant. Audits any URL, generates sitemap.xml, llms.txt, robots.txt and FAQPage schema, proposes title and meta candidates, finds keyword gaps.">
 <meta name="keywords" content="MCP server, MCP for SEO, MCP for AEO, SEO MCP, AEO MCP, MCP for Cursor, MCP for Claude Code, MCP for Windsurf, MCP for ChatGPT Desktop, MCP for Lovable, MCP for v0, MCP server for vibe coding, vibe coder SEO tool, SEO tool for AI coding agents, AI coding SEO, Cursor SEO plugin, Claude Code SEO, Windsurf SEO, llms.txt generator, sitemap.xml generator, robots.txt generator, FAQPage schema generator, JSON-LD generator, Answer Engine Optimization MCP, Google AI Overviews SEO, get cited by ChatGPT, get cited by Perplexity, get cited by Claude, AI search optimization, vibe coded site SEO audit, free SEO audit tool, free AEO audit">
 <meta name="author" content="Ranki.io · 1Fancy Inc.">
 <meta name="creator" content="Younes Lamnabhi">
@@ -338,7 +338,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 </style>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Ranki MCP","alternateName":["Ranki MCP Server","MCP for Cursor","MCP for Claude Code","MCP for Windsurf"],"url":"https://mcp.ranki.io/","applicationCategory":"DeveloperApplication","operatingSystem":"Cross-platform — Web, macOS, Linux, Windows","description":"Free Model Context Protocol server that audits SEO + AEO and generates sitemap.xml, llms.txt, robots.txt directly from Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop, and any other MCP-capable client.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"Ranki.io","url":"https://ranki.io"},"sameAs":["https://github.com/1fancy/ranki-mcp","https://github.com/1fancy/ranki-seo-skills","https://ranki.io"]}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Ranki MCP","alternateName":["Ranki MCP Server","MCP for Cursor","MCP for Claude Code","MCP for Windsurf"],"url":"https://mcp.ranki.io/","applicationCategory":"DeveloperApplication","operatingSystem":"Cross-platform — Web, macOS, Linux, Windows","description":"Free Model Context Protocol server that audits SEO + AEO and generates sitemap.xml, llms.txt, robots.txt directly from Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop, and any other MCP-capable client.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"Ranki.io","url":"https://ranki.io"},"sameAs":["https://github.com/1fancy/seo-aeo-audit-mcp-ranki","https://github.com/1fancy/ranki-seo-skills","https://ranki.io"]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HowTo","name":"How to install Ranki MCP in Claude Code, Cursor, or Windsurf","description":"Add SEO + AEO advisor tools to any MCP-capable AI coding agent in 30 seconds.","totalTime":"PT30S","step":[{"@type":"HowToStep","position":1,"name":"Get a free API key","text":"Sign in at app.ranki.io and copy your key from the Developer page.","url":"https://app.ranki.io/developer"},{"@type":"HowToStep","position":2,"name":"Paste the MCP snippet into your client config","text":"For stdio clients (Claude Desktop, Claude Code, ChatGPT Desktop): use the npx -y @ranki/mcp command in your MCP config. For HTTP clients (Cursor, Windsurf, Claude.ai web): point at https://mcp.ranki.io with X-API-Key header."},{"@type":"HowToStep","position":3,"name":"Restart the client and try a tool","text":"Ask your AI: 'audit my site for AEO and fix it'. Your AI will call audit_aeo, return a scorecard, and apply the fixes to your repo using your own AI credits."}]}
@@ -351,7 +351,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
   {"@type":"Question","name":"Will Ranki MCP burn my Claude credits or my Cursor budget?","acceptedAnswer":{"@type":"Answer","text":"No more than usual. Ranki MCP returns deterministic data — checklists, generated files, fix recipes. It never calls an LLM. Your Claude or Cursor reads the response and decides what to do with it, using your existing subscription. So adding Ranki MCP costs you exactly zero new tokens."}},
   {"@type":"Question","name":"How does Ranki MCP help me get cited by ChatGPT and Google AI Overviews?","acceptedAnswer":{"@type":"Answer","text":"The audit_aeo tool checks the eight structural signals AI search engines use to pick citations: FAQPage JSON-LD, Article schema, definitional intros under 80 words, author bylines, llms.txt presence, robots.txt allowing GPTBot and ClaudeBot and PerplexityBot, answer-style H2 headings, and comparison tables. For each failing check it returns a copy-pasteable fix recipe your AI applies to your code."}},
   {"@type":"Question","name":"Was Ranki MCP built by SEO professionals?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ranki MCP is the dev surface of Ranki.io, an AI SEO + AEO automation platform built by Younes Lamnabhi (SEO professional since 2009). The advisor tools encode 17 years of on-page SEO and three years of AEO experience. The product itself audits sites for thousands of paying users every day."}},
-  {"@type":"Question","name":"Can I see the source code? Is it open source?","acceptedAnswer":{"@type":"Answer","text":"Yes. Both repositories are MIT-licensed and live at github.com/1fancy/ranki-mcp (PHP server plus the @ranki/mcp npx shim) and github.com/1fancy/ranki-seo-skills (the companion Claude Skill plus Cursor and Windsurf rule files)."}},
+  {"@type":"Question","name":"Can I see the source code? Is it open source?","acceptedAnswer":{"@type":"Answer","text":"Yes. Both repositories are MIT-licensed and live at github.com/1fancy/seo-aeo-audit-mcp-ranki (PHP server plus the @ranki/mcp npx shim) and github.com/1fancy/ranki-seo-skills (the companion Claude Skill plus Cursor and Windsurf rule files)."}},
   {"@type":"Question","name":"What is the Ranki Skill and how does it relate to the MCP server?","acceptedAnswer":{"@type":"Answer","text":"The MCP server gives your AI new tools. The Skill (a Markdown file) gives your AI a playbook — when to call which tool, in what order, how to interpret the results, and how to apply fixes to your codebase. Together they turn Claude or Cursor into a senior SEO consultant with a written runbook. Install the Skill at github.com/1fancy/ranki-seo-skills."}}
 ]}
 </script>
@@ -373,7 +373,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
       <a href="#skill">Skill</a>
       <a href="#why">Why</a>
       <a href="#faq">FAQ</a>
-      <a href="https://github.com/1fancy/ranki-mcp" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/1fancy/seo-aeo-audit-mcp-ranki" target="_blank" rel="noopener">GitHub</a>
       <a href="https://app.ranki.io/developer" class="btn btn-primary">Get API key →</a>
     </nav>
     <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
@@ -399,7 +399,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
     <a href="#skill">Skill</a>
     <a href="#why">Why advisor-only</a>
     <a href="#faq">FAQ</a>
-    <a href="https://github.com/1fancy/ranki-mcp" target="_blank" rel="noopener">MCP source · GitHub</a>
+    <a href="https://github.com/1fancy/seo-aeo-audit-mcp-ranki" target="_blank" rel="noopener">MCP source · GitHub</a>
     <a href="https://github.com/1fancy/ranki-seo-skills" target="_blank" rel="noopener">Skill source · GitHub</a>
     <a href="https://ranki.io/developers" target="_blank" rel="noopener">Developer docs</a>
   </nav>
@@ -413,8 +413,8 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
   <section class="hero">
     <div class="container">
       <div class="eyebrow"><span class="live-dot"></span> Free SEO audit tool · MCP server · 15 SEO tools</div>
-      <h1>Free <span class="accent">SEO audit tool</span> for vibe coders</h1>
-      <p class="lede">Audit any page for SEO and Answer Engine Optimization, generate <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, <span class="mono">robots.txt</span>, fix FAQPage schema and rewrite titles. Works inside Cursor, Claude Code, Windsurf, ChatGPT Desktop and Claude.ai. The Ranki MCP server, the Claude Skill and the REST API all install in 30 seconds. Free for 5 daily checks per IP, 500 with a free account.</p>
+      <h1>Free <span class="accent">SEO and AEO audit tool</span><br>for vibe coders</h1>
+      <p class="lede">The free Model Context Protocol server that turns Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop into a senior SEO and AEO consultant. Audit any URL, generate <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, <span class="mono">robots.txt</span>, FAQPage schema and JSON-LD, propose title and meta description candidates, flag pages that should be hidden from search engines, find keyword gaps, and explain every SEO term in plain English.</p>
       <div class="cta-row">
         <a href="#install" class="btn btn-primary btn-xl">Install in 30 seconds →</a>
         <a href="#tools" class="btn btn-ghost btn-xl">See the 15 SEO tools</a>
@@ -553,7 +553,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 npx @ranki/cli update
 <span class="c"># diagnose your setup:</span>
 RANKI_API_KEY=rk_live_... npx @ranki/cli check</pre>
-        <p style="margin-top:.8rem;color:var(--ink-3);font-size:.84rem">Detects Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop, then writes the MCP config and downloads the Skill into the right path. Source: <a href="https://github.com/1fancy/ranki-mcp/tree/main/cli">github.com/1fancy/ranki-mcp/tree/main/cli</a>.</p>
+        <p style="margin-top:.8rem;color:var(--ink-3);font-size:.84rem">Detects Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop, then writes the MCP config and downloads the Skill into the right path. Source: <a href="https://github.com/1fancy/seo-aeo-audit-mcp-ranki/tree/main/cli">github.com/1fancy/seo-aeo-audit-mcp-ranki/tree/main/cli</a>.</p>
       </div>
 
       <p style="text-align:center;margin:0 auto 1.6rem;max-width:680px;color:var(--ink-3);font-size:.88rem">Or paste the right snippet manually:</p>
@@ -762,7 +762,7 @@ ranki-seo/.windsurfrules -o .windsurfrules
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">What does AEO mean? Why should I care?</div><div class="faq-a"><strong style="color:var(--ink)">Answer Engine Optimization</strong> — the structural signals (FAQPage schema, definitional intros, author bylines, <span class="mono">llms.txt</span>, comparison tables) that ChatGPT, Claude, Perplexity, and Google AI Overviews use to pick which sites to cite. In 2026, AEO is the fastest-growing search channel and most sites have zero coverage. Audit yours with <span class="mono">audit_aeo</span> in 5 seconds.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Will I need to learn how to read SEO reports?</div><div class="faq-a">No. The advisor tools return advice in a format your AI parses — checklists with pass/fail and copy-pasteable fix recipes. Your AI applies the fixes; you read the diff if you want to.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Do I need a Ranki.io account?</div><div class="faq-a">No, for the nine advisor tools — they work free, rate-limited to five calls per IP per UTC day. Yes, for <span class="mono">list_projects</span> and <span class="mono">get_article</span>, which need a free key to read your private Ranki.io data. <a href="https://app.ranki.io/developer">Generate a key →</a></div></div>
-        <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Is the source code open?</div><div class="faq-a">Yes — MIT license. PHP server and npx shim at <a href="https://github.com/1fancy/ranki-mcp" target="_blank" rel="noopener">github.com/1fancy/ranki-mcp</a>. The companion Claude / Cursor / Windsurf Skill bundle at <a href="https://github.com/1fancy/ranki-seo-skills" target="_blank" rel="noopener">github.com/1fancy/ranki-seo-skills</a>.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Is the source code open?</div><div class="faq-a">Yes — MIT license. PHP server and npx shim at <a href="https://github.com/1fancy/seo-aeo-audit-mcp-ranki" target="_blank" rel="noopener">github.com/1fancy/seo-aeo-audit-mcp-ranki</a>. The companion Claude / Cursor / Windsurf Skill bundle at <a href="https://github.com/1fancy/ranki-seo-skills" target="_blank" rel="noopener">github.com/1fancy/ranki-seo-skills</a>.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">How is this different from Surfer SEO, Frase, SEMrush, Ahrefs?</div><div class="faq-a">Those are SaaS dashboards — you log in, paste a URL, get a report, switch back to your IDE, copy/paste the recommendations into your code. Ranki MCP lives <em>inside</em> your IDE. Your AI calls the tools inline, applies the fixes to your files, re-runs the audit. Different shape, different price (free), different audience (devs vibe-coding, not SEO professionals running campaigns).</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Will Google penalize sites optimized this way?</div><div class="faq-a">No. Every check Ranki MCP runs is documented in <a href="https://developers.google.com/search/docs" target="_blank" rel="noopener">Google's own search docs</a> or the schema.org spec. We don't generate doorway pages, keyword-stuffed content, or anything that violates anti-spam guidelines. We're the opposite of "black-hat" — we make sites <em>more</em> readable to Google + AI.</div></div>
       </div>
@@ -785,7 +785,7 @@ ranki-seo/.windsurfrules -o .windsurfrules
         <h4>MCP server</h4>
         <a href="#install">Install</a>
         <a href="#tools">10 tools</a>
-        <a href="https://github.com/1fancy/ranki-mcp" target="_blank" rel="noopener">Source · MIT</a>
+        <a href="https://github.com/1fancy/seo-aeo-audit-mcp-ranki" target="_blank" rel="noopener">Source · MIT</a>
         <a href="https://www.npmjs.com/package/@ranki/mcp" target="_blank" rel="noopener">npm @ranki/mcp</a>
       </div>
       <div>

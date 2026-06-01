@@ -1,133 +1,79 @@
-# Ranki MCP — get cited by ChatGPT, Claude & Google AI Overviews, without leaving your IDE
+# Ranki MCP — Free SEO and AEO audit tool for Cursor, Claude Code, Windsurf and ChatGPT
 
-> **The free MCP server that turns your Claude / Cursor / ChatGPT Desktop into a senior SEO + AEO consultant. Audits any URL, generates `sitemap.xml` / `llms.txt` / `robots.txt`, finds keyword gaps, and tells your AI exactly what to fix — all using your own AI credits, never ours.**
+> The free Model Context Protocol (MCP) server that turns Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop into a senior SEO and AEO consultant. Audits any URL, generates `sitemap.xml`, `llms.txt`, `robots.txt`, FAQPage schema and JSON-LD, proposes title and meta description candidates, flags pages that should be hidden from search engines, finds keyword gaps and explains every SEO term in plain English.
 
 [![MCP 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-orange)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm @ranki/mcp](https://img.shields.io/npm/v/@ranki/mcp.svg?label=%40ranki%2Fmcp)](https://www.npmjs.com/package/@ranki/mcp)
-[![mcp.ranki.io](https://img.shields.io/badge/live-mcp.ranki.io-black)](https://mcp.ranki.io)
+[![live mcp.ranki.io](https://img.shields.io/badge/live-mcp.ranki.io-black)](https://mcp.ranki.io)
+[![Skill repo](https://img.shields.io/badge/companion-ranki--seo--skills-orange)](https://github.com/1fancy/ranki-seo-skills)
 
-You vibe-coded a site this weekend. It's beautiful. Nobody can find it.
+You shipped a site. It runs. Lighthouse is green. Six weeks later organic traffic is still zero and ChatGPT, Claude, Perplexity and Google AI Overviews never mention it. The reason is almost always the same: the site is missing `sitemap.xml`, `llms.txt`, FAQPage JSON-LD, the right `robots.txt` and the structural signals AI search engines look for. Ranki MCP fixes that from inside your AI editor.
 
-That's because Google + ChatGPT + Claude + Perplexity + Google AI Overviews can't figure out what your site is about — you have no `sitemap.xml`, no `llms.txt`, no FAQPage JSON-LD, no canonical tags, no `robots.txt` that explicitly invites AI crawlers. Every other SEO tool assumes you already know all those terms. **This one doesn't.**
-
-Ranki MCP plugs into Claude Code, Claude Desktop, Cursor, ChatGPT Desktop, and any other [Model Context Protocol](https://modelcontextprotocol.io)–capable client. It adds **10 tools** that diagnose SEO and AEO ("Answer Engine Optimization" — the new game) on any URL and tell your AI **exactly how to fix them**. Your Claude does the actual work, in your codebase, using your existing subscription. We never charge you a token.
-
-### 30-second try
+## Install in one line
 
 ```bash
-# Add to ~/.claude/claude_desktop_config.json, then restart Claude Desktop
-{
-  "mcpServers": {
-    "ranki": {
-      "command": "npx",
-      "args": ["-y", "@ranki/mcp"],
-      "env": { "RANKI_API_KEY": "rk_live_..." }
-    }
-  }
-}
+npx @ranki/cli install
 ```
 
-Then in any Claude conversation:
+The CLI auto-detects which AI editor you have installed (Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop), writes the right MCP config in the right place and downloads the companion Skill file from the [ranki-seo-skills repo](https://github.com/1fancy/ranki-seo-skills). Re-run `npx @ranki/cli update` later to refresh the Skill; `npx @ranki/cli check` verifies the setup.
 
-> *"audit my site at https://myapp.dev for AEO and fix the failures in this repo"*
+Prefer the manual JSON snippet? Examples for each editor are in the [Install](#install) section below.
 
-Claude will call `audit_aeo`, get back a scorecard with 8 specific failures + fix recipes, edit the actual files in your codebase, re-run the audit, and confirm the score jumped. **You watch. You ship.**
+## What it actually does — 15 tools
 
-### What you'll get
+The MCP server exposes 15 tools. Your AI editor calls them like any other MCP tool; they return Markdown reports your editor renders inline.
 
-- **Indexed faster.** A starter kit of `robots.txt` + `sitemap.xml` + `llms.txt` + JSON-LD in the right spots — the four files most vibe-coded sites are missing.
-- **Cited by AI search.** Concrete FAQPage / Article schema, definitional intros, author bylines, answer-style headings — the structural signals ChatGPT and Claude actually use to pick citations.
-- **A content backlog.** Topic-discovery + keyword-gap tooling so you stop staring at an empty `/blog` directory wondering what to write.
-- **Zero new bills.** Free advisor tools (5 calls/IP/day) or unlimited with a [free Ranki.io API key](https://app.ranki.io/developer). Your AI editor pays for the inference; we pay for the advice.
+### Audit
+- **`audit_seo(url)`** — 10-check on-page SEO scorecard: title length, meta description, H1 uniqueness, canonical, viewport, HTTPS, OpenGraph completeness, image alt coverage, internal link count, JSON-LD presence. Returns score 0-100 with per-failure fix recipes.
+- **`audit_aeo(url)`** — 8-check Answer Engine Optimization scorecard: FAQPage / Article JSON-LD, definitional intro under 80 words, author byline, `llms.txt` presence, `robots.txt` allows GPTBot / ClaudeBot / PerplexityBot, answer-style H2/H3 headings, comparison tables.
+- **`audit_hidden_pages(urls, domain)`** — classifies each path as `robots-disallow`, `noindex`, `keep` or `unsure` with reasoning. Catches admin routes, API endpoints, drafts, login pages, account dashboards, thank-you pages, build artifacts and search-result URLs. Returns a ready-to-paste `robots.txt` block.
 
----
+### Generate
+- **`generate_sitemap_xml(urls)`** — builds a deploy-ready `sitemap.xml` from a URL list with current `lastmod` timestamps.
+- **`generate_llms_txt(site_name, summary, key_pages)`** — generates `llms.txt`, the emerging standard for telling AI crawlers what your site is and which pages to cite.
+- **`generate_robots_txt(sitemap_url, allow_ai, disallow_paths)`** — builds a `robots.txt` that explicitly allows or denies GPTBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot and Google-Extended.
 
-## Table of contents
+### Content & strategy
+- **`seo_starter_kit(domain)`** — returns the four baseline files most vibe-coded sites are missing (`robots.txt`, `sitemap.xml`, `llms.txt`, JSON-LD) ready to paste into your repo.
+- **`find_topic_ideas(url)`** — reads your homepage, infers your niche, and returns a structured brief for generating 15 article topics across informational, commercial and transactional intent with prioritization criteria.
+- **`find_keyword_gap(url, competitors)`** — returns a step-by-step methodology for finding keywords competitors rank for but you don't. If no competitors are given, instructs your editor to ask first.
+- **`propose_titles_metas(urls, focus_keyword)`** — extracts the actual title, h1 and first paragraph from each URL (or accepts a free-text description for un-deployed pages), then returns a Markdown table with 5 title and meta description candidates per page across 5 angles (descriptive, benefit-led, question-format, specific-number, keyword-first). Each candidate is flagged for length compliance.
+- **`explain_seo_terms(category)`** — plain-English glossary of 40+ SEO and AEO terms: SEO, AEO, GEO, JSON-LD, FAQPage, canonical, `llms.txt`, Core Web Vitals, E-E-A-T, helpful content update, doorway pages, and more. Filter by category: basics, AEO, technical, analytics, penalty.
 
-- [Why Ranki MCP exists](#why-ranki-mcp-exists)
-- [What it does that nothing else does](#what-it-does-that-nothing-else-does)
-- [The 10 MCP tools](#the-10-mcp-tools)
-- [Install](#install)
-- [How vibe-coders use it](#how-vibe-coders-use-it)
-- [Architecture](#architecture)
-- [Why "advisor only" matters](#why-advisor-only-matters)
-- [SEO vs AEO — what's the difference?](#seo-vs-aeo--whats-the-difference)
-- [llms.txt — the emerging AI-search standard](#llmstxt--the-emerging-ai-search-standard)
-- [Self-hosting](#self-hosting)
-- [Contributing](#contributing)
-- [FAQ](#faq)
-- [License](#license)
+### Install & verify
+- **`install_skill(agent)`** — returns the install commands for the [ranki-seo-skills](https://github.com/1fancy/ranki-seo-skills) Skill across Claude Code, Claude Desktop, Cursor, Windsurf, Claude.ai web Projects and generic `AGENTS.md` agents.
+- **`get_account()`** — confirms your API key works and returns your account snapshot: name, email, plan, daily and monthly quota, current usage. Requires API key.
 
----
+### Bridge to your Ranki.io content
+- **`list_projects()`** — lists projects in your [Ranki.io](https://ranki.io) account. Requires API key.
+- **`get_article(article_id)`** — fetches a single article by its `nano_id`: title, HTML, focus keywords, table of contents, embedded image URLs, SEO score. Requires API key.
 
-## Why Ranki MCP exists
+## How a typical session looks
 
-In 2026, two things are true:
+```text
+You:    audit https://myapp.dev for AEO and fix it
 
-1. **You can vibe-code an entire SaaS in a weekend** with Claude Code or Cursor.
-2. **Nobody you shipped that SaaS to will ever find it** because you have zero SEO, no AEO structure, no `llms.txt`, no `sitemap.xml`, and Google + ChatGPT can't tell what your site is about.
+Claude: → Calling ranki.audit_aeo(url="https://myapp.dev")
+        ← Score: 38/100. Missing: FAQPage schema, llms.txt, author byline,
+                          answer-style H2s, robots.txt blocks ClaudeBot.
+        → Editing public/robots.txt to allow AI crawlers…
+        → Calling ranki.generate_llms_txt(...) and writing public/llms.txt…
+        → Editing app/layout.tsx to inject FAQPage JSON-LD…
+        → Calling ranki.audit_aeo again to verify…
+        ← Score: 88/100.
+```
 
-Most SEO tools are made for SEO professionals — they assume you already know what a focus keyword is, what schema markup means, why FAQPage JSON-LD matters for citation in AI Overviews, and what an "answer-style heading" is.
+The Skill file (in [ranki-seo-skills](https://github.com/1fancy/ranki-seo-skills)) tells your editor when to call which tool, in what order, and where in your repo to apply each fix.
 
-**Ranki MCP flips that.** It assumes you know how to vibe-code but don't know SEO. So instead of giving you a 50-page audit, it gives your AI (Claude, Cursor, whoever you vibe-code with) a structured playbook — a brief that says "here's what to fix, here's the file content to write, here's how to verify it worked." Your AI does the actual work, in your codebase, using your credits.
+## Rate limits
 
-The result: a vibe-coded site goes from invisible to indexed-and-cited in the same session you finished shipping it.
-
----
-
-## What it does that nothing else does
-
-| | Traditional SEO tools | LLM-based SEO chatbots | **Ranki MCP** |
+| Tier | Daily cap | Scope | Bridge tools |
 |---|---|---|---|
-| **Designed for** | SEO professionals | General-purpose chat | Developers vibe-coding |
-| **Where it runs** | Web dashboard | Their UI | Your IDE / Claude |
-| **Who pays for the AI** | n/a (no AI) | The tool's vendor | **You** (your Claude credits) |
-| **Output** | Reports + recommendations | Long explanations | **Structured playbooks** your AI executes |
-| **Acts on your code** | No | No | **Yes** (via your AI agent) |
-| **Cost** | $99-$799/mo | $20-$200/mo | **Free** (5 advisor calls/IP/day, unlimited with [free Ranki.io account](https://app.ranki.io/developer)) |
+| Free (no key) | 5 calls | per IP | not available |
+| Free account ([app.ranki.io/developer](https://app.ranki.io/developer)) | 500 calls | per API key | `list_projects`, `get_article`, `get_account` unlocked |
 
----
-
-## The 10 MCP tools
-
-### Discovery (for "I don't know where to start")
-
-#### `seo_starter_kit(domain)`
-You shipped a site. What SEO files do you need? This tool returns the exact contents of `robots.txt`, `sitemap.xml`, `llms.txt`, and JSON-LD structured data — plus a deployment checklist. Your AI applies them to your repo.
-
-#### `find_topic_ideas(url)`
-You have a site but don't know what to write about. This tool sniffs your homepage's niche, then returns a structured brief telling your AI how to generate 15 article topics across informational / commercial / transactional intent, with prioritization criteria.
-
-#### `find_keyword_gap(url, competitors[])`
-You think competitors are stealing keywords from you but don't know which. This tool returns the methodology for keyword-gap analysis — your AI walks the user through it. Pass competitor URLs to get specific guidance, or omit them to have your AI ask the user first.
-
-### Auditing (for "what's broken on this page?")
-
-#### `audit_aeo(url)`
-Scorecard for **Answer Engine Optimization** — the signals ChatGPT, Claude, Perplexity, and Google AI Overviews use to pick which sites to cite. 8 checks: FAQPage / Article JSON-LD, definitional intro (≤80 words, "X is" pattern), author byline, `llms.txt` presence, `robots.txt` allowing GPTBot/ClaudeBot/PerplexityBot, answer-style H2/H3 headings, comparison tables. Each failed check includes a copy-pasteable fix recipe.
-
-#### `audit_seo(url)`
-On-page **SEO scorecard** — 10 checks scored 0-100. Title length (30-70 chars), meta description (70-165), H1 uniqueness, canonical, viewport meta, HTTPS, OpenGraph completeness, image alt coverage (≥90%), internal links (≥3), JSON-LD presence.
-
-### File generation (for "give me the file to deploy")
-
-#### `generate_sitemap_xml(urls[], changefreq)`
-Build a ready-to-deploy `sitemap.xml` from a URL list. Validates URLs, sets current `lastmod`, applies a sensible default `changefreq`. Submit to Google Search Console immediately.
-
-#### `generate_llms_txt(site_name, summary, key_pages[])`
-Generate the emerging `llms.txt` standard — the way you tell ChatGPT / Claude / Perplexity what your site is about, what your key pages are, and how to cite you.
-
-#### `generate_robots_txt(sitemap_url, allow_ai, disallow_paths[])`
-Build a `robots.txt` that explicitly allows or blocks AI crawlers (`GPTBot`, `ChatGPT-User`, `ClaudeBot`, `anthropic-ai`, `PerplexityBot`, `Google-Extended`). Default: allow — most sites want AI citation traffic.
-
-### Bridge (your Ranki.io content into your IDE)
-
-#### `list_projects()` — requires API key
-List the projects in your [Ranki.io](https://ranki.io) account. Pull your own content into Claude / Cursor while you work.
-
-#### `get_article(article_id)` — requires API key
-Fetch a single Ranki.io article — title, HTML, focus keywords, TOC, image URLs, SEO score. Use it for syndication, repurposing, reference.
+`X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset` are returned on every response. The dispatcher's error messages include the reset countdown and the upgrade path.
 
 ---
 
@@ -149,7 +95,7 @@ Add to `~/.claude/claude_desktop_config.json`:
 }
 ```
 
-Restart Claude Desktop. The MCP indicator should show **ranki** with 10 tools.
+Restart Claude Desktop. The MCP indicator should show **ranki** with 15 tools.
 
 ### Cursor (HTTP transport, no npx needed)
 
@@ -244,13 +190,13 @@ Claude (via Ranki MCP):
 
 ```
 ┌────────────────────────┐         ┌──────────────────────────┐
-│  Your Claude / Cursor  │         │  mcp.ranki.io (PHP)      │
+│  Claude / Cursor / etc │         │  mcp.ranki.io (PHP)      │
 │                        │         │                          │
-│  1. Sees 10 tools      │ JSON-RPC│  - 10 tool definitions   │
-│  2. Decides to use one ├────────►│  - HTTP/SSE transport    │
-│  3. Receives advice    │         │  - 5 free/IP/day rate    │
-│  4. Acts on your code  │         │  - REST API bridge       │
-│  5. Pays in YOUR creds │         │                          │
+│  1. Sees 15 tools      │ JSON-RPC│  - 15 tool definitions   │
+│  2. Decides to use one ├────────►│  - HTTP + stdio (npx)    │
+│  3. Receives advice    │         │  - 5/IP or 500/key per   │
+│  4. Acts on the repo   │         │    UTC day rate limit    │
+│                        │         │  - REST API bridge       │
 └────────────────────────┘         └────────────┬─────────────┘
                                                 │ (only for keyed tools)
                                                 ▼
@@ -293,28 +239,6 @@ ranki-mcp/
     ├── index.js                #   ~50 lines: stdin→POST→stdout
     └── README.md
 ```
-
----
-
-## Why "advisor only" matters
-
-Every other SEO + AI tool out there has the same business model:
-1. You pay them.
-2. They call OpenAI / Anthropic with your data.
-3. They charge you their AI cost + a margin.
-4. You get a black-box answer.
-
-Ranki MCP doesn't do this. It returns:
-- **Structured checklists** (parseable, not prose).
-- **Generated file content** (the exact `robots.txt` to deploy, not "you should write a `robots.txt`").
-- **Methodologies** (step-by-step playbooks your AI executes, not just "do keyword research").
-
-Your Claude / Cursor evaluates the advice against your codebase, decides what to apply, and edits the files. You pay for the AI tokens your AI uses. Ranki MCP itself never spends a single LLM token — that's why we can run the advisor tools for free.
-
-This also means:
-- **No vendor lock-in.** You can stop using Ranki MCP tomorrow; your code is yours.
-- **No surprise bills.** Your AI cost is whatever Claude/Cursor charges, not opaque markups.
-- **No "AI hallucination" worry from us.** We return deterministic data; your AI is the one doing the inference.
 
 ---
 

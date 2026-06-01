@@ -231,7 +231,7 @@ async function install() {
   }
   log(`\n  ${c.bold}Done.${c.reset} Restart your editor, then say to your AI:\n`);
   log(`  ${c.orange}"audit my site for SEO and fix it"${c.reset}\n`);
-  log(`  ${c.dim}Docs: https://mcp.ranki.io · ${c.reset}${c.dim}Repo: https://github.com/1fancy/ranki-mcp${c.reset}\n`);
+  log(`  ${c.dim}Docs: https://mcp.ranki.io · ${c.reset}${c.dim}Repo: https://github.com/1fancy/seo-aeo-audit-mcp-ranki${c.reset}\n`);
 }
 
 async function update() {
@@ -315,7 +315,7 @@ function help() {
     RANKI_API_KEY=rk_live_... npx @ranki/cli check
 
   ${c.bold}Docs${c.reset}  https://mcp.ranki.io
-  ${c.bold}Source${c.reset}  https://github.com/1fancy/ranki-mcp
+  ${c.bold}Source${c.reset}  https://github.com/1fancy/seo-aeo-audit-mcp-ranki
 `);
 }
 
