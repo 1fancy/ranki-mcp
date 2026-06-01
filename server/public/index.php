@@ -16,37 +16,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MCP for Cursor, Claude Code, Windsurf — Free SEO + AEO advisor | Ranki MCP</title>
-<meta name="description" content="Free MCP server crafted by SEO pros for vibe-coders. Drops into Cursor, Claude Code, Claude Desktop, Windsurf, ChatGPT Desktop — audits SEO + AEO, generates sitemap.xml, llms.txt, robots.txt, finds keyword gaps. Uses your AI credits, never ours.">
-<meta name="keywords" content="MCP server, MCP for Cursor, MCP for Claude Code, MCP for Windsurf, AEO MCP, SEO MCP, llms.txt generator, sitemap generator, vibe coding SEO, Answer Engine Optimization, Claude SEO, Cursor SEO, ChatGPT citation, vibe coded site SEO">
-<meta name="author" content="Ranki.io">
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+
+<!-- ============== PRIMARY SEO ============== -->
+<title>MCP for Cursor, Claude Code & Windsurf — Free SEO + AEO advisor | Ranki MCP</title>
+<meta name="description" content="Free MCP server crafted by SEO pros for vibe-coders. Plugs into Cursor, Claude Code, Claude Desktop, Windsurf, ChatGPT Desktop, Claude.ai web — audits SEO + Answer Engine Optimization, generates sitemap.xml, llms.txt, robots.txt, finds keyword gaps. Uses your AI credits, never ours.">
+<meta name="keywords" content="MCP server, Model Context Protocol, MCP for Cursor, MCP for Claude Code, MCP for Windsurf, MCP for ChatGPT, AEO MCP, SEO MCP, llms.txt generator, sitemap.xml generator, robots.txt generator, vibe coding SEO, Answer Engine Optimization, Claude SEO tool, Cursor SEO, ChatGPT citation, AI search optimization, vibe coded site SEO, get cited by ChatGPT, get cited by Perplexity, Google AI Overviews SEO, schema.org FAQPage">
+<meta name="author" content="Ranki.io · 1Fancy Inc.">
+<meta name="creator" content="Younes Lamnabhi">
+<meta name="publisher" content="Ranki.io">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="googlebot" content="index,follow">
+<meta name="bingbot" content="index,follow">
+<meta name="rating" content="General">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="generator" content="Ranki MCP">
+<meta name="application-name" content="Ranki MCP">
 
 <link rel="canonical" href="https://mcp.ranki.io/">
+<link rel="alternate" hreflang="en" href="https://mcp.ranki.io/">
+<link rel="alternate" hreflang="x-default" href="https://mcp.ranki.io/">
 
+<!-- ============== OPEN GRAPH ============== -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="MCP for Cursor, Claude Code & Windsurf — Free SEO + AEO advisor">
-<meta property="og:description" content="Drops into your IDE. Audits any URL for SEO + AEO, generates sitemap.xml / llms.txt / robots.txt, finds keyword gaps — using your own AI credits.">
+<meta property="og:description" content="Drops into your IDE. Audits any URL for SEO + AEO, generates sitemap.xml, llms.txt, robots.txt. Built by SEO pros for vibe-coders. Uses your own AI credits — never ours.">
 <meta property="og:url" content="https://mcp.ranki.io/">
 <meta property="og:site_name" content="Ranki MCP">
-<meta property="og:image" content="https://ranki.io/assets/svg/og-mcp.svg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="https://ranki.io/assets/images/favicon-512.png">
+<meta property="og:image:secure_url" content="https://ranki.io/assets/images/favicon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Ranki MCP — SEO + AEO advisor for AI coding agents">
 <meta property="og:locale" content="en_US">
+<meta property="article:publisher" content="https://ranki.io">
 
+<!-- ============== TWITTER / X ============== -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@rankiio">
+<meta name="twitter:creator" content="@younes_lam">
 <meta name="twitter:title" content="MCP for Cursor, Claude Code & Windsurf — Free SEO + AEO advisor">
 <meta name="twitter:description" content="Drops into your IDE. Audits SEO + AEO, generates sitemap.xml / llms.txt / robots.txt. Uses your AI credits, never ours.">
-<meta name="twitter:image" content="https://ranki.io/assets/svg/og-mcp.svg">
+<meta name="twitter:image" content="https://ranki.io/assets/images/favicon-512.png">
+<meta name="twitter:image:alt" content="Ranki MCP logo">
 
+<!-- ============== FAVICONS (served from ranki.io for cross-property sharing) ============== -->
+<link rel="icon" href="https://ranki.io/assets/images/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="https://ranki.io/assets/svg/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="https://ranki.io/assets/images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ranki.io/assets/images/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://ranki.io/assets/images/favicon-180.png">
-
+<link rel="mask-icon" href="https://ranki.io/assets/svg/favicon.svg" color="#f7906c">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#06070a">
+
+<!-- ============== THEMING + PWA ============== -->
+<meta name="theme-color" content="#06070a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7906c" media="(prefers-color-scheme: light)">
 <meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ranki MCP">
+<meta name="msapplication-TileColor" content="#06070a">
+<meta name="format-detection" content="telephone=no">
+
+<!-- ============== RESOURCE HINTS (perf) ============== -->
+<link rel="preconnect" href="https://ranki.io">
+<link rel="dns-prefetch" href="https://app.ranki.io">
+<link rel="dns-prefetch" href="https://github.com">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
