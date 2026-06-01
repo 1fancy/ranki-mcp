@@ -11,7 +11,7 @@ declare(strict_types=1);
  * those and skips IP rate-limiting (key has its own quota).
  */
 
-const RK_MCP_KEYED_TOOLS = ['list_projects', 'get_article', 'get_account', 'list_rank_tracking', 'list_gsc_keywords', 'ai_visibility'];
+const RK_MCP_KEYED_TOOLS = ['list_projects', 'list_articles', 'get_article', 'get_account', 'list_rank_tracking', 'list_gsc_keywords', 'ai_visibility'];
 
 function rk_mcp_is_keyed_tool(string $name): bool
 {
@@ -203,11 +203,25 @@ function rk_mcp_tool_definitions(): array
             ],
         ],
         [
-            'name' => 'get_article',
-            'description' => 'Fetch a single article from your Ranki.io account by nano_id. Returns title, content_html, focus_keyword (array), TOC, embedded image URLs, SEO score. Requires X-API-Key.',
+            'name' => 'list_articles',
+            'description' => "Paginated index of articles in a Ranki.io project. Each row carries everything an agent needs to decide which article to open: nano_id, project_id, title, status, language, focus_keyword[], TOC outline (h2/h3 list), word count, SEO score, published_at. The agent then calls `get_article(article_id=…)` for the full HTML and image URLs. Optional status filter (draft|review|scheduled|published). Requires X-API-Key.",
             'inputSchema' => [
                 'type' => 'object',
-                'properties' => ['article_id' => ['type' => 'string', 'description' => 'nano_id of the article (e.g. LISQJJOGF). Get one from list_projects then drill into a project.']],
+                'properties' => [
+                    'project_id' => ['type' => 'string', 'description' => 'Project nano_id (get from `list_projects`)'],
+                    'status' => ['type' => 'string', 'description' => 'Filter: draft | review | scheduled | published. Default: all.'],
+                    'per_page' => ['type' => 'integer', 'description' => 'Default 25, max 100'],
+                    'page' => ['type' => 'integer', 'description' => 'Page number, default 1'],
+                ],
+                'required' => ['project_id'],
+            ],
+        ],
+        [
+            'name' => 'get_article',
+            'description' => 'Fetch a single article from your Ranki.io account by nano_id. Returns title, content_html, focus_keyword (array), TOC, embedded image URLs, SEO score and checklist. Requires X-API-Key. Best used after `list_articles` so the agent already has the nano_id.',
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => ['article_id' => ['type' => 'string', 'description' => 'nano_id of the article (e.g. LISQJJOGF). Get one from `list_articles` for the relevant project.']],
                 'required' => ['article_id'],
             ],
         ],
