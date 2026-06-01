@@ -45,8 +45,17 @@ return function (array $args, string $apiKey): array {
     curl_close($ch);
 
     if ($body === false || $code >= 400) {
-        $hint = $code === 403 ? " — the PSI key on the server may be invalid or out of quota; ping support@ranki.io" : '';
-        return rk_mcp_text_content("PageSpeed Insights couldn't analyze {$url} (HTTP {$code}){$hint}. This usually means the URL is unreachable, blocked by a firewall, or behind login. Try the public homepage instead.");
+        if ($code === 429) {
+            return rk_mcp_text_content("PageSpeed Insights rate-limited the request (HTTP 429). The Ranki MCP server is sharing an unauthenticated PSI quota — Google caps it tightly. Try again in 60 seconds, or set GOOGLE_PSI_API_KEY on the server (free Google Cloud key) to lift the cap to 25,000 calls/day.");
+        }
+        if ($code === 403) {
+            return rk_mcp_text_content("PageSpeed Insights rejected the request (HTTP 403). The server's GOOGLE_PSI_API_KEY is invalid or out of quota — ping support@ranki.io.");
+        }
+        if ($code === 400) {
+            return rk_mcp_text_content("PageSpeed Insights couldn't analyze {$url} (HTTP 400). Either the URL isn't reachable from the open internet, it requires login, or Lighthouse failed to load the page. Try the public homepage instead.");
+        }
+
+        return rk_mcp_text_content("PageSpeed Insights returned HTTP {$code} for {$url}. If this keeps happening, ping support@ranki.io.");
     }
 
     $data = json_decode((string) $body, true);

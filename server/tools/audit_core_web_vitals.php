@@ -41,6 +41,10 @@ return function (array $args, string $apiKey): array {
     curl_close($ch);
 
     if ($body === false || $code >= 400) {
+        if ($code === 429) {
+            return rk_mcp_text_content("PageSpeed Insights rate-limited the request (HTTP 429). The Ranki MCP is sharing an unauthenticated PSI quota — Google caps it tightly. Try again in 60 seconds, or set GOOGLE_PSI_API_KEY on the server to lift the cap to 25,000 calls/day.");
+        }
+
         return rk_mcp_text_content("Couldn't fetch Core Web Vitals for {$url} (HTTP {$code}). The URL must be public and reachable from the open internet.");
     }
 
