@@ -241,36 +241,44 @@ section{padding:3.5rem 0;position:relative}
 .section-head h2{font-family:'Ranki Black','Inter',sans-serif;font-size:clamp(1.7rem,5vw,2.6rem);font-weight:900;letter-spacing:-.02em;line-height:1.15;margin-bottom:.8rem}
 .section-head p{color:var(--ink-2);font-size:1rem;line-height:1.6}
 
-/* ============== "FOR WHO" — vibe coder positioning ============== */
-.for-who{display:grid;grid-template-columns:1fr;gap:1.2rem;max-width:980px;margin:0 auto}
-@media (min-width:780px){.for-who{grid-template-columns:1fr 1fr 1fr}}
-.for-row{padding:1.4rem 1.5rem;border-left:2px solid var(--orange);background:linear-gradient(90deg,var(--orange-soft) 0%,transparent 60%);border-radius:0 10px 10px 0}
-.for-row strong{display:block;color:var(--ink);font-size:1rem;margin-bottom:.5rem;font-weight:700}
-.for-row p{color:var(--ink-2);font-size:.9rem;line-height:1.6}
+/* ============== "FOR WHO" — narrative steps, not cards ============== */
+.for-narrative{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:0}
+.for-step{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;padding:2rem 0;border-bottom:1px dashed var(--line-2);align-items:start;position:relative}
+.for-step:last-child{border-bottom:0}
+.for-step .n{font-family:'Ranki Black','Inter',sans-serif;font-size:clamp(2.8rem,7vw,4rem);font-weight:900;line-height:.9;color:transparent;-webkit-text-stroke:1.5px var(--orange);background:linear-gradient(180deg,var(--orange) 0%,transparent 70%);-webkit-background-clip:text;background-clip:text;letter-spacing:-.03em;flex-shrink:0;min-width:3rem}
+.for-step h3{font-family:'Ranki Black','Inter',sans-serif;font-size:clamp(1.25rem,3vw,1.55rem);font-weight:900;letter-spacing:-.015em;color:var(--ink);margin-bottom:.6rem;line-height:1.2}
+.for-step p{color:var(--ink-2);font-size:.97rem;line-height:1.65}
+.for-step p strong{color:var(--ink)}
+.for-step .ref{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--orange);padding:.2rem .55rem;background:var(--orange-soft);border:1px solid rgba(247,144,108,.25);border-radius:5px;margin-top:.85rem;letter-spacing:-.005em}
+@media (max-width:560px){.for-step{grid-template-columns:1fr;gap:.6rem;padding:1.6rem 0}.for-step .n{font-size:2.6rem}}
 
-/* ============== TOOLS — terminal list ============== */
-.tools-block{max-width:920px;margin:0 auto;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,rgba(13,15,20,.9),rgba(6,7,10,.95));overflow:hidden}
-.tools-head{display:flex;align-items:center;gap:.7rem;padding:.85rem 1.2rem;background:rgba(0,0,0,.25);border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase}
-@media (min-width:768px){.tools-head{padding:.9rem 1.5rem;font-size:.78rem}}
-.tools-head .count{margin-left:auto;color:var(--orange);font-weight:600}
-.tool-row{display:grid;grid-template-columns:auto 1fr;gap:.9rem;padding:1rem 1.2rem;border-bottom:1px solid var(--line);align-items:start;transition:background .15s}
-@media (min-width:560px){.tool-row{grid-template-columns:auto 1fr auto;gap:1.1rem;padding:1.15rem 1.5rem}}
-.tool-row:last-child{border-bottom:none}
-.tool-row:hover{background:rgba(247,144,108,.04)}
-.tool-row .icon{width:28px;height:28px;border-radius:7px;background:var(--orange-soft);border:1px solid rgba(247,144,108,.25);display:flex;align-items:center;justify-content:center;color:var(--orange);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.74rem;flex-shrink:0;margin-top:.15rem}
-.tool-row h3{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.92rem;color:var(--ink);margin-bottom:.3rem;letter-spacing:-.01em;word-break:break-word}
-@media (min-width:560px){.tool-row h3{font-size:.98rem}}
-.tool-row p{color:var(--ink-2);font-size:.86rem;line-height:1.55;margin:0}
-@media (min-width:560px){.tool-row p{font-size:.9rem}}
-.tool-row .tag{grid-column:2;justify-self:start;margin-top:.5rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.18rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;background:rgba(155,229,166,.1);color:var(--green);border:1px solid rgba(155,229,166,.2)}
-@media (min-width:560px){.tool-row .tag{grid-column:auto;align-self:flex-start;margin-top:.2rem}}
-.tool-row .tag.key{background:var(--orange-soft);color:var(--orange);border-color:rgba(247,144,108,.3)}
+/* ============== TOOLS — grouped category view ============== */
+.tools-wrap{max-width:980px;margin:0 auto}
+.tools-cats{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;padding:0 1rem}
+.tools-cat-pill{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;padding:.4rem .85rem;border-radius:99px;background:var(--bg-3);border:1px solid var(--line-2);color:var(--ink-3);letter-spacing:.02em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.45rem}
+.tools-cat-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.tools-cat-pill .dot.key{background:var(--orange)}
+
+.tool-cat{margin-bottom:2.5rem}
+.tool-cat-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--line)}
+.tool-cat-head h3{font-family:'Ranki Black','Inter',sans-serif;font-size:1.15rem;font-weight:900;letter-spacing:-.01em;color:var(--ink)}
+.tool-cat-head .badge{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+
+.tools-grid{display:grid;grid-template-columns:1fr;gap:.8rem}
+@media (min-width:680px){.tools-grid{grid-template-columns:1fr 1fr}}
+.tool-cell{padding:1rem 1.15rem;border-radius:10px;background:rgba(13,15,20,.5);border:1px solid var(--line);transition:all .15s;position:relative}
+.tool-cell:hover{border-color:var(--orange);background:rgba(247,144,108,.04);transform:translateY(-1px)}
+.tool-cell h4{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.9rem;color:var(--orange);margin-bottom:.45rem;letter-spacing:-.01em;word-break:break-word}
+.tool-cell p{color:var(--ink-2);font-size:.86rem;line-height:1.55}
+.tool-cell .key-flag{position:absolute;top:.6rem;right:.7rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.12rem .4rem;border-radius:3px;background:rgba(247,144,108,.12);color:var(--orange);border:1px solid rgba(247,144,108,.3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
 
 /* ============== INSTALL ============== */
 .install-grid{display:grid;grid-template-columns:1fr;gap:1rem;max-width:980px;margin:0 auto}
 @media (min-width:780px){.install-grid{grid-template-columns:1fr 1fr}}
 .install-block{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(13,15,20,.6);backdrop-filter:blur(8px)}
-.install-head{padding:.8rem 1.1rem;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:.55rem;font-size:.85rem;font-weight:600;color:var(--ink);background:rgba(0,0,0,.2);flex-wrap:wrap}
+.install-head{padding:.8rem 1.1rem;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:.55rem;font-size:.82rem;font-weight:600;color:var(--ink);background:rgba(0,0,0,.2);line-height:1.35}
+.install-head svg{flex-shrink:0}
+.install-head span{min-width:0;word-break:normal;overflow-wrap:break-word}
 @media (min-width:560px){.install-head{padding:.85rem 1.2rem;font-size:.92rem}}
 .install-body{padding:1rem 1.1rem}
 @media (min-width:560px){.install-body{padding:1.2rem}}
@@ -400,12 +408,12 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 
   <section class="hero">
     <div class="container">
-      <div class="eyebrow"><span class="live-dot"></span> Crafted by SEO pros · 12 tools · MIT licensed</div>
+      <div class="eyebrow"><span class="live-dot"></span> Crafted by SEO pros · 13 tools · MIT licensed</div>
       <h1>Your site ships fast.<br>Then <span class="accent">disappears</span> in AI search.</h1>
       <p class="lede">Google updates the rules every quarter. AI Overviews ate 30% of clicks. ChatGPT and Perplexity cite the sites with the right schema and ignore everyone else. Penalties happen quietly. You haven't kept up — that's fine, nobody has. Ranki MCP is the playbook your AI editor needs, plugged into Cursor, Claude, Windsurf and ChatGPT. We track the moving target so your Claude can fix your repo using your own AI credits.</p>
       <div class="cta-row">
         <a href="#install" class="btn btn-primary btn-xl">Install in 30 seconds →</a>
-        <a href="#tools" class="btn btn-ghost btn-xl">See the 12 tools</a>
+        <a href="#tools" class="btn btn-ghost btn-xl">See the 13 tools</a>
       </div>
 
       <div class="compat-row">
@@ -434,18 +442,30 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
         <h2>SEO changes every quarter. We track it so you don't have to.</h2>
         <p>If you've shipped a Next.js, Astro, Lovable, v0, or Bolt.new site this year without ever opening Google Search Console — this is for you. New rules drop monthly. Penalties get triggered quietly. Most vibe-coded sites are missing 70% of the signals AI search engines look for.</p>
       </div>
-      <div class="for-who">
-        <div class="for-row">
-          <strong>You shipped a SaaS. It's invisible.</strong>
-          <p>Beautiful UI, Lighthouse green, zero traffic. ChatGPT, Claude, and Perplexity never mention you because the page has no FAQPage schema, no <span class="mono">llms.txt</span>, no author byline, and the H2s aren't questions. <span class="mono">audit_aeo</span> finds it in 5 seconds.</p>
+      <div class="for-narrative">
+        <div class="for-step">
+          <div class="n">01</div>
+          <div>
+            <h3>You shipped a site. It's invisible.</h3>
+            <p>Beautiful UI, Lighthouse green, zero organic traffic. ChatGPT, Claude, and Perplexity never mention your page — because it has no <strong>FAQPage schema</strong>, no <span class="mono">llms.txt</span>, no author byline, and the H2 headings aren't phrased as questions. Your site is technically online but invisible to the engines that decide who gets cited.</p>
+            <span class="ref">→ audit_aeo finds all 8 missing signals in 5 seconds</span>
+          </div>
         </div>
-        <div class="for-row">
-          <strong>You haven't tracked the updates.</strong>
-          <p>Google's Helpful Content update demotes AI-only content. <span class="mono">llms.txt</span> became a standard in 2025. <span class="mono">Google-Extended</span> opts you in/out of AI Overviews. None of this was a thing when you learned web dev — and yes, it changed last quarter too.</p>
+        <div class="for-step">
+          <div class="n">02</div>
+          <div>
+            <h3>You haven't tracked the updates. Nobody has.</h3>
+            <p>Google's <strong>Helpful Content update</strong> demotes AI-only content. <span class="mono">llms.txt</span> became a real standard in 2025. <span class="mono">Google-Extended</span> opts you in or out of AI Overviews. Backlink rules changed (again). None of this was a thing when you learned web dev — and yes, three of those changed last quarter too.</p>
+            <span class="ref">→ explain_seo_terms translates every word in an audit</span>
+          </div>
         </div>
-        <div class="for-row">
-          <strong>Penalties happen without warning.</strong>
-          <p>Doorway pages, cloaking, paid backlinks, scaled AI content — sites get demoted overnight and most owners never even check Google Search Console. <span class="mono">explain_seo_terms</span> shows you what every word in an SEO audit actually means.</p>
+        <div class="for-step">
+          <div class="n">03</div>
+          <div>
+            <h3>Penalties happen quietly. You'd never know.</h3>
+            <p>Doorway pages, cloaking, paid backlinks, scaled AI content — sites get demoted overnight by Google's spam systems. Most owners never check Search Console until traffic vanishes. <strong>Knowing the jargon is the first defense.</strong> Your AI applies the fixes once it knows what to look for.</p>
+            <span class="ref">→ seo_starter_kit ships the 4 baseline files most sites lack</span>
+          </div>
         </div>
       </div>
     </div>
@@ -454,24 +474,60 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
   <section id="tools">
     <div class="container">
       <div class="section-head">
-        <h2>Twelve tools your AI can hold</h2>
+        <h2>Thirteen tools your AI can hold</h2>
         <p>The MCP server returns checklists, ready-to-deploy files, and fix recipes. <strong>Your</strong> AI evaluates them against your code. We never run on your tokens — that's why the advisor tools stay free.</p>
+        <div class="tools-cats" style="margin-top:1.4rem">
+          <span class="tools-cat-pill"><span class="dot"></span> 10 free</span>
+          <span class="tools-cat-pill"><span class="dot key"></span> 3 with API key</span>
+          <span class="tools-cat-pill" style="background:transparent;color:var(--ink-3)">all open source</span>
+        </div>
       </div>
 
-      <div class="tools-block">
-        <div class="tools-head"><span>tools/list</span><span class="count">12 tools</span></div>
-        <div class="tool-row"><div class="icon">SK</div><div><h3>seo_starter_kit(domain)</h3><p>You shipped a site. We hand back the exact <span class="mono">robots.txt</span>, <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, and JSON-LD structured data — plus the deploy order. Your AI writes the files into your repo.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">TI</div><div><h3>find_topic_ideas(url)</h3><p>You don't know what to blog about. We sniff your niche and tell your AI how to generate 15 topics across informational, commercial, and transactional intent — with prioritization criteria.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">KG</div><div><h3>find_keyword_gap(url, competitors[])</h3><p>You suspect competitors are stealing your keywords. We return the gap-analysis methodology — your AI walks the user through it. If no competitors given, your AI asks the user first.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">XT</div><div><h3>explain_seo_terms(category?)</h3><p>Plain-English glossary of 40+ SEO + AEO terms — what every word in an audit actually means. Categories: basics, AEO, technical, analytics, penalties. The dictionary you wish came with the search docs.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">AE</div><div><h3>audit_aeo(url)</h3><p>The eight signals ChatGPT, Claude, Perplexity, and Google AI Overviews use to pick citations — FAQPage / Article JSON-LD, definitional intro, author byline, <span class="mono">llms.txt</span>, robots.txt AI allowance, answer-style headings, tables — each with a copy-pasteable fix.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">AS</div><div><h3>audit_seo(url)</h3><p>On-page SEO scorecard. Ten checks scored 0-100 — title length, meta description, H1 uniqueness, canonical, viewport, HTTPS, OpenGraph, image alt coverage, internal links, JSON-LD presence.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">SM</div><div><h3>generate_sitemap_xml(urls[])</h3><p>Pass your URL list, get back a deploy-ready sitemap with current lastmod. Submit to Google Search Console immediately.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">LT</div><div><h3>generate_llms_txt(site_name, summary, key_pages)</h3><p>The emerging <span class="mono">llms.txt</span> standard for telling LLMs what your site is about and how to cite you. The single highest-signal AEO file most sites are missing.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">RT</div><div><h3>generate_robots_txt(sitemap_url, allow_ai, disallow_paths)</h3><p>Build a <span class="mono">robots.txt</span> that explicitly allows or blocks GPTBot, ClaudeBot, PerplexityBot, Google-Extended, ChatGPT-User, anthropic-ai. Default: allow — you want AI citation traffic.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">IS</div><div><h3>install_skill(agent?)</h3><p>Returns the exact install commands for the Ranki SEO Skill — across Claude Code, Claude Desktop, Cursor, Windsurf, Claude.ai web, or generic <span class="mono">AGENTS.md</span> agents. Your AI reads the response and applies it.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">GA</div><div><h3>get_account()</h3><p>Whoami for your API key. Returns your name, email, plan, daily/monthly limits, current usage. Best first call after you paste a key — confirms it works.</p></div><span class="tag key">Key</span></div>
-        <div class="tool-row"><div class="icon">LP</div><div><h3>list_projects() &middot; get_article(id)</h3><p>Pull your Ranki.io projects and articles into the same Claude or Cursor conversation where you're vibe-coding.</p></div><span class="tag key">Key</span></div>
+      <div class="tools-wrap">
+
+        <div class="tool-cat">
+          <div class="tool-cat-head"><h3>Discovery — what should I do next?</h3><span class="badge">3 tools · free</span></div>
+          <div class="tools-grid">
+            <div class="tool-cell"><h4>seo_starter_kit(domain)</h4><p>You shipped a site. We hand back the exact <span class="mono">robots.txt</span>, <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, and JSON-LD templates — plus deploy order. Your AI writes the files into your repo.</p></div>
+            <div class="tool-cell"><h4>find_topic_ideas(url)</h4><p>You don't know what to blog about. We sniff your niche and tell your AI how to generate 15 topics across informational, commercial, and transactional intent — with prioritization.</p></div>
+            <div class="tool-cell"><h4>find_keyword_gap(url, competitors[])</h4><p>You suspect competitors are stealing your keywords. We return the gap-analysis methodology — your AI walks the user through it.</p></div>
+          </div>
+        </div>
+
+        <div class="tool-cat">
+          <div class="tool-cat-head"><h3>Diagnose — what's broken right now?</h3><span class="badge">2 tools · free</span></div>
+          <div class="tools-grid">
+            <div class="tool-cell"><h4>audit_aeo(url)</h4><p>The 8 signals ChatGPT, Claude, Perplexity, and Google AI Overviews use to pick citations. Each failing check ships with a copy-pasteable fix recipe.</p></div>
+            <div class="tool-cell"><h4>audit_seo(url)</h4><p>On-page SEO scorecard. Ten checks scored 0-100 — title length, meta description, H1, canonical, viewport, HTTPS, OG, alt coverage, internal links, JSON-LD.</p></div>
+          </div>
+        </div>
+
+        <div class="tool-cat">
+          <div class="tool-cat-head"><h3>Generate — give me the file to deploy</h3><span class="badge">3 tools · free</span></div>
+          <div class="tools-grid">
+            <div class="tool-cell"><h4>generate_sitemap_xml(urls[])</h4><p>Pass your URL list, get back a deploy-ready sitemap with current lastmod. Submit to Google Search Console immediately.</p></div>
+            <div class="tool-cell"><h4>generate_llms_txt(...)</h4><p>The emerging <span class="mono">llms.txt</span> standard for telling LLMs what your site is about and how to cite you. Single highest-signal AEO file most sites are missing.</p></div>
+            <div class="tool-cell"><h4>generate_robots_txt(...)</h4><p>Build a <span class="mono">robots.txt</span> that explicitly allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended. Default: allow — you want the citation traffic.</p></div>
+          </div>
+        </div>
+
+        <div class="tool-cat">
+          <div class="tool-cat-head"><h3>Learn & install — bring everything together</h3><span class="badge">2 tools · free</span></div>
+          <div class="tools-grid">
+            <div class="tool-cell"><h4>explain_seo_terms(category?)</h4><p>Plain-English glossary of 40+ SEO + AEO terms — what every word in an audit actually means. Categories: basics, AEO, technical, analytics, penalties.</p></div>
+            <div class="tool-cell"><h4>install_skill(agent?)</h4><p>Returns the exact install commands for the Ranki SEO Skill across Claude Code, Claude Desktop, Cursor, Windsurf, Claude.ai web Projects, or generic <span class="mono">AGENTS.md</span>.</p></div>
+          </div>
+        </div>
+
+        <div class="tool-cat">
+          <div class="tool-cat-head"><h3>Account & bridge — your Ranki.io data, in your IDE</h3><span class="badge">3 tools · API key</span></div>
+          <div class="tools-grid">
+            <div class="tool-cell"><span class="key-flag">Key</span><h4>get_account()</h4><p>Whoami for your API key. Returns your name, email, plan, daily/monthly limits, current usage. Best first call after pasting a key.</p></div>
+            <div class="tool-cell"><span class="key-flag">Key</span><h4>list_projects()</h4><p>List the projects in your Ranki.io account. Pulls your automated-content pipeline into the same Claude or Cursor conversation.</p></div>
+            <div class="tool-cell"><span class="key-flag">Key</span><h4>get_article(article_id)</h4><p>Fetch a single Ranki.io article — title, HTML, focus keywords, TOC, embedded image URLs, SEO score.</p></div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -487,7 +543,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
         <div class="install-block">
           <div class="install-head">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            Stdio · Claude Desktop · Code · ChatGPT Desktop
+            <span>Stdio · Claude Desktop · Code · ChatGPT Desktop</span>
           </div>
           <div class="install-body">
             <p class="path">~/.claude/claude_desktop_config.json</p>
@@ -506,7 +562,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
         <div class="install-block">
           <div class="install-head">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            HTTP · Cursor · Windsurf
+            <span>HTTP · Cursor · Windsurf</span>
           </div>
           <div class="install-body">
             <p class="path">.cursor/mcp.json (or .windsurf/mcp.json)</p>
@@ -526,7 +582,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
         <div class="install-block">
           <div class="install-head">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-            Claude.ai web · Custom Connector
+            <span>Claude.ai web · Custom Connector</span>
           </div>
           <div class="install-body">
             <p class="path">claude.ai → Settings → Connectors → Add custom connector</p>
@@ -541,20 +597,25 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 
         <div class="install-block">
           <div class="install-head">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-            One-line curl · Claude Code · Cursor · Windsurf
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="flex-shrink:0"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <span>Terminal · one-liner installers</span>
           </div>
           <div class="install-body">
-            <p class="path">Paste in your terminal (replace YOUR_KEY)</p>
-            <pre class="code"><button class="copy-btn" onclick="copyCode(this)"><span class="c"># Claude Code (CLI)</span>
-claude mcp add ranki \
+            <p class="path">Claude Code CLI</p>
+            <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button>claude mcp add ranki \
   -e RANKI_API_KEY=YOUR_KEY \
-  -- npx -y @ranki/mcp
-
-<span class="c"># Cursor (writes .cursor/mcp.json in cwd)</span>
-mkdir -p .cursor && cat > .cursor/mcp.json &lt;&lt;EOF
-{"mcpServers":{"ranki":{"url":"https://mcp.ranki.io",
-"headers":{"X-API-Key":"YOUR_KEY"}}}}
+  -- npx -y @ranki/mcp</pre>
+            <p class="path" style="margin-top:1rem">Cursor / Windsurf · write the config file</p>
+            <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button>mkdir -p .cursor
+cat &gt; .cursor/mcp.json &lt;&lt;'EOF'
+{
+  "mcpServers": {
+    "ranki": {
+      "url": "https://mcp.ranki.io",
+      "headers": { "X-API-Key": "YOUR_KEY" }
+    }
+  }
+}
 EOF</pre>
           </div>
         </div>
@@ -762,9 +823,10 @@ const term = document.getElementById('termBody');
 let lineIdx = 0;
 function nextLine(){
   if (lineIdx >= termLines.length) {
-    term.innerHTML = '';
-    lineIdx = 0;
-    setTimeout(nextLine, 1800);
+    // End of the script — leave the final state visible with a blinking
+    // prompt + cursor, so the terminal looks alive but doesn't restart.
+    term.innerHTML += '<br><span class="p">›</span> <span class="cursor"></span>';
+    term.scrollTop = term.scrollHeight;
     return;
   }
   const [html, delay] = termLines[lineIdx++];
