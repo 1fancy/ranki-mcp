@@ -80,22 +80,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 <meta name="format-detection" content="telephone=no">
 
 <!-- ============== RESOURCE HINTS (perf) ============== -->
-<link rel="preconnect" href="https://ranki.io">
+<link rel="preconnect" href="https://ranki.io" crossorigin>
 <link rel="dns-prefetch" href="https://app.ranki.io">
 <link rel="dns-prefetch" href="https://github.com">
+<!-- Preload the brand title font so headings render in Ranki Black on
+     first paint instead of swapping in mid-scroll (fixes the FOUT some
+     users see on hash-jump navigation to #tools / #install). -->
+<link rel="preload" href="https://ranki.io/assets/fonts/ranki_black.woff" as="font" type="font/woff" crossorigin>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* Ranki Black — title font, served from ranki.io */
+/* Ranki Black — title font, served from ranki.io.
+   font-display:optional waits up to 100ms then falls back permanently,
+   eliminating the late-swap FOUT users were seeing on hash-jump nav.
+   The <link rel="preload"> above usually loads it in time. */
 @font-face {
   font-family: 'Ranki Black';
   src: url('https://ranki.io/assets/fonts/ranki_black.woff') format('woff'),
        url('https://ranki.io/assets/fonts/ranki_black.ttf') format('truetype');
   font-weight: 900;
-  font-display: swap;
+  font-display: optional;
 }
 
 :root {
@@ -328,7 +335,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
   {"@type":"Question","name":"What is an MCP server, and why do I need one for SEO?","acceptedAnswer":{"@type":"Answer","text":"MCP (Model Context Protocol) is the standard Anthropic introduced in late 2024 for connecting AI agents like Claude Code, Cursor, and Windsurf to external tools. An MCP server adds capabilities your AI doesn't have on its own. Ranki MCP adds SEO + AEO auditing, sitemap and llms.txt generation, keyword-gap analysis, and topic discovery — so your AI can fix your vibe-coded site without you having to learn SEO."}},
   {"@type":"Question","name":"Is Ranki MCP compatible with Cursor, Windsurf, Claude Code, and ChatGPT Desktop?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ranki MCP supports both transport modes. Stdio transport (used by Claude Desktop, Claude Code, ChatGPT Desktop) installs via npx -y @ranki/mcp. HTTP transport (used by Cursor, Windsurf, Claude.ai web, and most newer clients) points directly at https://mcp.ranki.io. Same tools, same data, different wire format."}},
-  {"@type":"Question","name":"Does Ranki MCP cost anything?","acceptedAnswer":{"@type":"Answer","text":"The eight advisor tools (audit_aeo, audit_seo, generate_sitemap_xml, generate_llms_txt, generate_robots_txt, seo_starter_kit, find_topic_ideas, find_keyword_gap) are free, rate-limited to five calls per IP per day. Two bridge tools (list_projects, get_article) require a free Ranki.io API key. The only LLM cost is the one your existing Claude or Cursor subscription already covers."}},
+  {"@type":"Question","name":"Does Ranki MCP cost anything?","acceptedAnswer":{"@type":"Answer","text":"The nine advisor tools (audit_aeo, audit_seo, generate_sitemap_xml, generate_llms_txt, generate_robots_txt, seo_starter_kit, find_topic_ideas, find_keyword_gap) are free, rate-limited to five calls per IP per day. Three bridge tools (list_projects, get_article, get_account) require a free Ranki.io API key. The only LLM cost is the one your existing Claude or Cursor subscription already covers."}},
   {"@type":"Question","name":"Will Ranki MCP burn my Claude credits or my Cursor budget?","acceptedAnswer":{"@type":"Answer","text":"No more than usual. Ranki MCP returns deterministic data — checklists, generated files, fix recipes. It never calls an LLM. Your Claude or Cursor reads the response and decides what to do with it, using your existing subscription. So adding Ranki MCP costs you exactly zero new tokens."}},
   {"@type":"Question","name":"How does Ranki MCP help me get cited by ChatGPT and Google AI Overviews?","acceptedAnswer":{"@type":"Answer","text":"The audit_aeo tool checks the eight structural signals AI search engines use to pick citations: FAQPage JSON-LD, Article schema, definitional intros under 80 words, author bylines, llms.txt presence, robots.txt allowing GPTBot and ClaudeBot and PerplexityBot, answer-style H2 headings, and comparison tables. For each failing check it returns a copy-pasteable fix recipe your AI applies to your code."}},
   {"@type":"Question","name":"Was Ranki MCP built by SEO professionals?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ranki MCP is the dev surface of Ranki.io, an AI SEO + AEO automation platform built by Younes Lamnabhi (SEO professional since 2009). The advisor tools encode 17 years of on-page SEO and three years of AEO experience. The product itself audits sites for thousands of paying users every day."}},
@@ -393,12 +400,12 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 
   <section class="hero">
     <div class="container">
-      <div class="eyebrow"><span class="live-dot"></span> Crafted by SEO pros · For vibe-coders</div>
-      <h1>SEO + AEO advisor<br>built for <span class="accent">Cursor, Claude & Windsurf</span></h1>
-      <p class="lede">You ship sites with AI. They look amazing. Nobody finds them. Ranki MCP fixes that — your AI editor calls our tools, gets back the exact `robots.txt`, `sitemap.xml`, `llms.txt`, FAQPage schema and rewritten paragraphs your site needs, then applies them to your repo using <strong>your</strong> AI credits, never ours.</p>
+      <div class="eyebrow"><span class="live-dot"></span> Crafted by SEO pros · 12 tools · MIT licensed</div>
+      <h1>Your site ships fast.<br>Then <span class="accent">disappears</span> in AI search.</h1>
+      <p class="lede">Google updates the rules every quarter. AI Overviews ate 30% of clicks. ChatGPT and Perplexity cite the sites with the right schema and ignore everyone else. Penalties happen quietly. You haven't kept up — that's fine, nobody has. Ranki MCP is the playbook your AI editor needs, plugged into Cursor, Claude, Windsurf and ChatGPT. We track the moving target so your Claude can fix your repo using your own AI credits.</p>
       <div class="cta-row">
         <a href="#install" class="btn btn-primary btn-xl">Install in 30 seconds →</a>
-        <a href="#tools" class="btn btn-ghost btn-xl">See the 10 tools</a>
+        <a href="#tools" class="btn btn-ghost btn-xl">See the 12 tools</a>
       </div>
 
       <div class="compat-row">
@@ -408,7 +415,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
         <span><strong>Cursor</strong></span>
         <span><strong>Windsurf</strong></span>
         <span><strong>ChatGPT Desktop</strong></span>
-        <span><strong>any MCP client</strong></span>
+        <span><strong>Claude.ai web</strong></span>
       </div>
 
       <div class="hero-term" aria-hidden="true">
@@ -424,21 +431,21 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
   <section id="for-who" style="padding-top:1rem">
     <div class="container">
       <div class="section-head">
-        <h2>For developers who code first, learn SEO never</h2>
-        <p>If you've shipped a Next.js, Astro, Lovable, v0, or Bolt.new site this year without ever opening Google Search Console — this is for you.</p>
+        <h2>SEO changes every quarter. We track it so you don't have to.</h2>
+        <p>If you've shipped a Next.js, Astro, Lovable, v0, or Bolt.new site this year without ever opening Google Search Console — this is for you. New rules drop monthly. Penalties get triggered quietly. Most vibe-coded sites are missing 70% of the signals AI search engines look for.</p>
       </div>
       <div class="for-who">
         <div class="for-row">
-          <strong>You vibe-coded a SaaS</strong>
-          <p>It runs. It's pretty. Lighthouse score is fine. But ChatGPT, Claude, and Perplexity never mention it because it has no FAQPage schema, no <span class="mono">llms.txt</span>, and the H2s aren't questions.</p>
+          <strong>You shipped a SaaS. It's invisible.</strong>
+          <p>Beautiful UI, Lighthouse green, zero traffic. ChatGPT, Claude, and Perplexity never mention you because the page has no FAQPage schema, no <span class="mono">llms.txt</span>, no author byline, and the H2s aren't questions. <span class="mono">audit_aeo</span> finds it in 5 seconds.</p>
         </div>
         <div class="for-row">
-          <strong>Your blog is empty</strong>
-          <p>You know you "should write content." You don't know which 15 topics, in what order, for which search intent. <span class="mono">find_topic_ideas</span> hands your AI a structured brief and the prioritization criteria.</p>
+          <strong>You haven't tracked the updates.</strong>
+          <p>Google's Helpful Content update demotes AI-only content. <span class="mono">llms.txt</span> became a standard in 2025. <span class="mono">Google-Extended</span> opts you in/out of AI Overviews. None of this was a thing when you learned web dev — and yes, it changed last quarter too.</p>
         </div>
         <div class="for-row">
-          <strong>Competitors are eating your lunch</strong>
-          <p>They're 18 months older. You can write fresher + better. You just need to know WHICH keywords. <span class="mono">find_keyword_gap</span> tells your AI exactly how to find them.</p>
+          <strong>Penalties happen without warning.</strong>
+          <p>Doorway pages, cloaking, paid backlinks, scaled AI content — sites get demoted overnight and most owners never even check Google Search Console. <span class="mono">explain_seo_terms</span> shows you what every word in an SEO audit actually means.</p>
         </div>
       </div>
     </div>
@@ -447,22 +454,24 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
   <section id="tools">
     <div class="container">
       <div class="section-head">
-        <h2>Ten tools your AI can hold</h2>
+        <h2>Twelve tools your AI can hold</h2>
         <p>The MCP server returns checklists, ready-to-deploy files, and fix recipes. <strong>Your</strong> AI evaluates them against your code. We never run on your tokens — that's why the advisor tools stay free.</p>
       </div>
 
       <div class="tools-block">
-        <div class="tools-head"><span>tools/list</span><span class="count">10 tools</span></div>
+        <div class="tools-head"><span>tools/list</span><span class="count">12 tools</span></div>
         <div class="tool-row"><div class="icon">SK</div><div><h3>seo_starter_kit(domain)</h3><p>You shipped a site. We hand back the exact <span class="mono">robots.txt</span>, <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, and JSON-LD structured data — plus the deploy order. Your AI writes the files into your repo.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">TI</div><div><h3>find_topic_ideas(url)</h3><p>You don't know what to blog about. We sniff your niche, return a structured brief, and tell your AI how to generate 15 topics across informational, commercial, and transactional intent — with prioritization criteria.</p></div><span class="tag">Free</span></div>
+        <div class="tool-row"><div class="icon">TI</div><div><h3>find_topic_ideas(url)</h3><p>You don't know what to blog about. We sniff your niche and tell your AI how to generate 15 topics across informational, commercial, and transactional intent — with prioritization criteria.</p></div><span class="tag">Free</span></div>
         <div class="tool-row"><div class="icon">KG</div><div><h3>find_keyword_gap(url, competitors[])</h3><p>You suspect competitors are stealing your keywords. We return the gap-analysis methodology — your AI walks the user through it. If no competitors given, your AI asks the user first.</p></div><span class="tag">Free</span></div>
+        <div class="tool-row"><div class="icon">XT</div><div><h3>explain_seo_terms(category?)</h3><p>Plain-English glossary of 40+ SEO + AEO terms — what every word in an audit actually means. Categories: basics, AEO, technical, analytics, penalties. The dictionary you wish came with the search docs.</p></div><span class="tag">Free</span></div>
         <div class="tool-row"><div class="icon">AE</div><div><h3>audit_aeo(url)</h3><p>The eight signals ChatGPT, Claude, Perplexity, and Google AI Overviews use to pick citations — FAQPage / Article JSON-LD, definitional intro, author byline, <span class="mono">llms.txt</span>, robots.txt AI allowance, answer-style headings, tables — each with a copy-pasteable fix.</p></div><span class="tag">Free</span></div>
         <div class="tool-row"><div class="icon">AS</div><div><h3>audit_seo(url)</h3><p>On-page SEO scorecard. Ten checks scored 0-100 — title length, meta description, H1 uniqueness, canonical, viewport, HTTPS, OpenGraph, image alt coverage, internal links, JSON-LD presence.</p></div><span class="tag">Free</span></div>
         <div class="tool-row"><div class="icon">SM</div><div><h3>generate_sitemap_xml(urls[])</h3><p>Pass your URL list, get back a deploy-ready sitemap with current lastmod. Submit to Google Search Console immediately.</p></div><span class="tag">Free</span></div>
         <div class="tool-row"><div class="icon">LT</div><div><h3>generate_llms_txt(site_name, summary, key_pages)</h3><p>The emerging <span class="mono">llms.txt</span> standard for telling LLMs what your site is about and how to cite you. The single highest-signal AEO file most sites are missing.</p></div><span class="tag">Free</span></div>
         <div class="tool-row"><div class="icon">RT</div><div><h3>generate_robots_txt(sitemap_url, allow_ai, disallow_paths)</h3><p>Build a <span class="mono">robots.txt</span> that explicitly allows or blocks GPTBot, ClaudeBot, PerplexityBot, Google-Extended, ChatGPT-User, anthropic-ai. Default: allow — you want AI citation traffic.</p></div><span class="tag">Free</span></div>
-        <div class="tool-row"><div class="icon">LP</div><div><h3>list_projects()</h3><p>List the projects in your Ranki.io account. Pulls your own automated-content pipeline into the same Claude or Cursor conversation where you're vibe-coding.</p></div><span class="tag key">Key</span></div>
-        <div class="tool-row"><div class="icon">GA</div><div><h3>get_article(article_id)</h3><p>Fetch a single Ranki.io article by nano_id — title, full HTML, focus keywords, TOC, embedded image URLs, SEO score.</p></div><span class="tag key">Key</span></div>
+        <div class="tool-row"><div class="icon">IS</div><div><h3>install_skill(agent?)</h3><p>Returns the exact install commands for the Ranki SEO Skill — across Claude Code, Claude Desktop, Cursor, Windsurf, Claude.ai web, or generic <span class="mono">AGENTS.md</span> agents. Your AI reads the response and applies it.</p></div><span class="tag">Free</span></div>
+        <div class="tool-row"><div class="icon">GA</div><div><h3>get_account()</h3><p>Whoami for your API key. Returns your name, email, plan, daily/monthly limits, current usage. Best first call after you paste a key — confirms it works.</p></div><span class="tag key">Key</span></div>
+        <div class="tool-row"><div class="icon">LP</div><div><h3>list_projects() &middot; get_article(id)</h3><p>Pull your Ranki.io projects and articles into the same Claude or Cursor conversation where you're vibe-coding.</p></div><span class="tag key">Key</span></div>
       </div>
     </div>
   </section>
@@ -672,7 +681,7 @@ ranki-seo/.windsurfrules -o .windsurfrules
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Was Ranki MCP built by actual SEO professionals?</div><div class="faq-a">Yes. The product is the developer surface of <a href="https://ranki.io" target="_blank" rel="noopener">Ranki.io</a>, an AI SEO + AEO automation platform built by Younes Lamnabhi (in SEO since 2009 — 17 years of on-page work + 3 years of AEO research). The audit logic encodes patterns we use daily for thousands of paying users.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">What does AEO mean? Why should I care?</div><div class="faq-a"><strong style="color:var(--ink)">Answer Engine Optimization</strong> — the structural signals (FAQPage schema, definitional intros, author bylines, <span class="mono">llms.txt</span>, comparison tables) that ChatGPT, Claude, Perplexity, and Google AI Overviews use to pick which sites to cite. In 2026, AEO is the fastest-growing search channel and most sites have zero coverage. Audit yours with <span class="mono">audit_aeo</span> in 5 seconds.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Will I need to learn how to read SEO reports?</div><div class="faq-a">No. The advisor tools return advice in a format your AI parses — checklists with pass/fail and copy-pasteable fix recipes. Your AI applies the fixes; you read the diff if you want to.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Do I need a Ranki.io account?</div><div class="faq-a">No, for the eight advisor tools — they work free, rate-limited to five calls per IP per UTC day. Yes, for <span class="mono">list_projects</span> and <span class="mono">get_article</span>, which need a free key to read your private Ranki.io data. <a href="https://app.ranki.io/developer">Generate a key →</a></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Do I need a Ranki.io account?</div><div class="faq-a">No, for the nine advisor tools — they work free, rate-limited to five calls per IP per UTC day. Yes, for <span class="mono">list_projects</span> and <span class="mono">get_article</span>, which need a free key to read your private Ranki.io data. <a href="https://app.ranki.io/developer">Generate a key →</a></div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Is the source code open?</div><div class="faq-a">Yes — MIT license. PHP server and npx shim at <a href="https://github.com/1fancy/ranki-mcp" target="_blank" rel="noopener">github.com/1fancy/ranki-mcp</a>. The companion Claude / Cursor / Windsurf Skill bundle at <a href="https://github.com/1fancy/ranki-seo-skills" target="_blank" rel="noopener">github.com/1fancy/ranki-seo-skills</a>.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">How is this different from Surfer SEO, Frase, SEMrush, Ahrefs?</div><div class="faq-a">Those are SaaS dashboards — you log in, paste a URL, get a report, switch back to your IDE, copy/paste the recommendations into your code. Ranki MCP lives <em>inside</em> your IDE. Your AI calls the tools inline, applies the fixes to your files, re-runs the audit. Different shape, different price (free), different audience (devs vibe-coding, not SEO professionals running campaigns).</div></div>
         <div class="faq-item"><div class="faq-q" onclick="this.parentNode.classList.toggle('open')">Will Google penalize sites optimized this way?</div><div class="faq-a">No. Every check Ranki MCP runs is documented in <a href="https://developers.google.com/search/docs" target="_blank" rel="noopener">Google's own search docs</a> or the schema.org spec. We don't generate doorway pages, keyword-stuffed content, or anything that violates anti-spam guidelines. We're the opposite of "black-hat" — we make sites <em>more</em> readable to Google + AI.</div></div>

@@ -52,6 +52,26 @@ function rk_mcp_tool_definitions(): array
             ],
         ],
         [
+            'name' => 'explain_seo_terms',
+            'description' => "Plain-English glossary of 40+ SEO + AEO terms — what every vibe-coder runs into reading an SEO audit. Returns the jargon (SEO, AEO, GEO, FAQPage, JSON-LD, llms.txt, canonical, E-E-A-T, Core Web Vitals, doorway pages, helpful content update, etc.) grouped by category with practical context. Optional 'category' arg: basics | aeo | technical | analytics | penalty | all. No API key required.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'category' => ['type' => 'string', 'description' => 'Filter to one category. Default: all.'],
+                ],
+            ],
+        ],
+        [
+            'name' => 'install_skill',
+            'description' => "Returns the exact install commands for the Ranki SEO + AEO Skill across every supported AI agent (Claude Code, Claude Desktop, Cursor, Windsurf, Claude.ai web Projects, generic AGENTS.md). The Skill is a Markdown playbook that auto-activates on SEO/AEO prompts and orchestrates the other Ranki MCP tools. Optional 'agent' arg picks one (claude_code | claude_desktop | cursor | windsurf | claude_web | generic | all). No API key required.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'agent' => ['type' => 'string', 'description' => 'Which agent to install for. Default: all.'],
+                ],
+            ],
+        ],
+        [
             'name' => 'audit_aeo',
             'description' => 'Audit a URL for Answer Engine Optimization. Checks: FAQPage / Article JSON-LD, definitional intro (<80 words, "X is" pattern), author byline, llms.txt presence, robots.txt allowing GPTBot/ClaudeBot/PerplexityBot, answer-style H2/H3 headings, structured tables. Returns scorecard + per-check fix recipes. No API key required.',
             'inputSchema' => [
