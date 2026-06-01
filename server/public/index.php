@@ -36,7 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ranki MCP — SEO + AEO advisor for Claude / Cursor">
 <meta name="twitter:description" content="Free MCP server: audit SEO + AEO, generate sitemap.xml / llms.txt / robots.txt from your IDE.">
-<link rel="icon" href="https://ranki.io/assets/images/favicon-32.png" type="image/png">
+<link rel="icon" type="image/svg+xml" href="https://ranki.io/assets/svg/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ranki.io/assets/images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ranki.io/assets/images/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -89,8 +91,10 @@ a:hover{color:var(--orange-2)}
 /* Header */
 header{position:sticky;top:0;background:rgba(10,10,10,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:50}
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
-.logo{font-weight:800;font-size:1.15rem;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center;gap:.5rem}
-.logo .dot{width:8px;height:8px;background:var(--orange);border-radius:50%;box-shadow:0 0 16px var(--orange-glow)}
+.logo{font-weight:800;font-size:1.15rem;letter-spacing:-.02em;color:var(--ink);display:inline-flex;align-items:center;gap:.55rem;text-decoration:none}
+.logo .mark{width:32px;height:32px;display:block;flex:0 0 auto}
+.logo .word{font-weight:800}
+.logo .sub{font-weight:600;font-size:.72rem;color:var(--orange);letter-spacing:.06em;padding:.18rem .5rem;background:rgba(247,144,108,.12);border-radius:99px;border:1px solid rgba(247,144,108,.25);text-transform:uppercase;line-height:1}
 .nav{display:flex;gap:1.8rem;align-items:center}
 .nav a{color:var(--ink-2);font-size:.95rem;font-weight:500}
 .nav a:hover{color:var(--ink)}
@@ -161,7 +165,11 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:3rem 0 2r
 
 <header>
   <div class="container hdr">
-    <a href="/" class="logo"><span class="dot"></span> Ranki MCP</a>
+    <a href="/" class="logo" aria-label="Ranki MCP home">
+      <img class="mark" src="https://ranki.io/assets/svg/logo.svg" alt="" width="32" height="32" decoding="async" fetchpriority="high">
+      <span class="word">Ranki</span>
+      <span class="sub">MCP</span>
+    </a>
     <nav class="nav">
       <a href="#tools">Tools</a>
       <a href="#install">Install</a>
@@ -261,7 +269,11 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:3rem 0 2r
 <footer>
   <div class="container foot">
     <div>
-      <a href="/" class="logo" style="margin-bottom:.8rem"><span class="dot"></span> Ranki MCP</a>
+      <a href="/" class="logo" style="margin-bottom:.8rem" aria-label="Ranki MCP home">
+        <img class="mark" src="https://ranki.io/assets/svg/logo.svg" alt="" width="32" height="32" decoding="async">
+        <span class="word">Ranki</span>
+        <span class="sub">MCP</span>
+      </a>
       <p>Part of <a href="https://ranki.io">Ranki.io</a> — the AI SEO + AEO automation platform.</p>
     </div>
     <div>
