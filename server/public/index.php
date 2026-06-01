@@ -120,8 +120,10 @@ main, header, footer{position:relative;z-index:1}
 @media (max-width:880px){.nav a:not(.btn){display:none}}
 
 .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid transparent;transition:all .15s;font-family:inherit;cursor:pointer;line-height:1}
-.btn-primary{background:var(--orange);color:#000 !important}
-.btn-primary:hover{background:var(--orange-2);color:#000 !important}
+/* Primary CTA: orange gradient bg, white text (per user requirement —
+   stays readable against the orange and matches the rest of the site). */
+.btn-primary{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-2) 100%);color:#fff !important;box-shadow:0 4px 18px -4px rgba(247,144,108,.5)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--orange-2) 0%,#e8651f 100%);color:#fff !important;box-shadow:0 6px 24px -4px rgba(247,144,108,.7);transform:translateY(-1px)}
 .btn-ghost{border-color:var(--line-2);color:#fff !important;background:transparent}
 .btn-ghost:hover{border-color:var(--orange);color:#fff !important;background:var(--orange-soft)}
 
