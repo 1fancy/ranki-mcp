@@ -41,12 +41,14 @@ return function (array $args, string $apiKey): array {
         $bytes = null;
         $width = null;
         $height = null;
-        if ($isUrl) {
+        if ($isUrl && rk_mcp_url_blocked_reason($img) === null) {
             $ch = curl_init($img);
             curl_setopt_array($ch, [
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_NOBODY => true,
-                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_FOLLOWLOCATION => false,
+                CURLOPT_PROTOCOLS => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+                CURLOPT_CONNECTTIMEOUT => 4,
                 CURLOPT_TIMEOUT => 8,
                 CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; RankiMCP/0.3; +https://ranki.io)',
             ]);

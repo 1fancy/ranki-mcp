@@ -35,8 +35,31 @@ require __DIR__.'/lib/jsonrpc.php';
 require __DIR__.'/lib/registry.php';
 require __DIR__.'/lib/ratelimit.php';
 
-$raw = file_get_contents('php://input') ?: '';
-$req = json_decode($raw, true);
+// Reject oversized bodies early — JSON-RPC requests are tiny (a few KB at
+// most). 64 KB is plenty for the largest tool call (e.g., audit_hidden_pages
+// with a long URL list).
+$declaredLen = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+$maxBody = 65536;
+if ($declaredLen > $maxBody) {
+    http_response_code(413);
+    echo json_encode(['error' => 'payload_too_large', 'message' => "Request body must be ≤{$maxBody} bytes."]);
+    exit;
+}
+
+$raw = file_get_contents('php://input', false, null, 0, $maxBody + 1) ?: '';
+if (strlen($raw) > $maxBody) {
+    http_response_code(413);
+    echo json_encode(['error' => 'payload_too_large', 'message' => "Request body must be ≤{$maxBody} bytes."]);
+    exit;
+}
+
+// Cap JSON depth to defend against deeply-nested DoS payloads. 16 levels
+// is well above what any legitimate MCP request needs.
+try {
+    $req = json_decode($raw, true, 16, JSON_THROW_ON_ERROR);
+} catch (\JsonException $e) {
+    rk_mcp_reply_error(null, -32700, 'Parse error: '.$e->getMessage());
+}
 if (! is_array($req) || ($req['jsonrpc'] ?? null) !== '2.0' || ! isset($req['method'])) {
     rk_mcp_reply_error(null, -32600, 'Invalid Request — expected a JSON-RPC 2.0 body with "method" and "jsonrpc": "2.0".');
 }
@@ -64,7 +87,13 @@ try {
             $toolName = $params['name'] ?? null;
             $args = $params['arguments'] ?? [];
             if (! is_string($toolName) || $toolName === '') {
-                rk_mcp_reply_error($id, -32602, 'Missing tool name. Call `tools/list` to see all 11 available tools.');
+                rk_mcp_reply_error($id, -32602, 'Missing tool name. Call `tools/list` to see all available tools.');
+            }
+            // Defence-in-depth — the registry lookup below is the real gate,
+            // but reject anything that doesn't match the tool-name shape
+            // before we touch the filesystem at all.
+            if (! preg_match('/^[a-z][a-z0-9_]{0,63}$/', $toolName)) {
+                rk_mcp_reply_error($id, -32602, "Invalid tool name: {$toolName}");
             }
 
             // Keyed tools — verify a key exists before spending an upstream
@@ -83,12 +112,21 @@ try {
                 );
             }
 
-            // Rate-limit: free tier (no key) is 5/IP/day; keyed tier is
-            // 500/key/day across every tool. Counters are independent.
+            // Rate-limit: free tier (no key) = 5/IP/day; keyed tier =
+            // 500/key/day. We ALSO enforce a per-IP ceiling on keyed
+            // callers so a single bad actor can't burn quota then DoS the
+            // server from one IP. Counters are independent.
+            $ip = rk_mcp_client_ip();
+            $ipRl = rk_mcp_check_ip($ip, $apiKey !== '' ? 100 : null);
             if ($apiKey === '') {
-                $rl = rk_mcp_check_ip(rk_mcp_client_ip());
+                $rl = $ipRl;
             } else {
                 $rl = rk_mcp_check_key($apiKey);
+                // Surface the tighter of the two limits in headers so MCP
+                // clients see what's actually capping them.
+                if (! $ipRl['allowed']) {
+                    $rl = $ipRl;
+                }
             }
             header('X-RateLimit-Limit: '.$rl['limit']);
             header('X-RateLimit-Remaining: '.max(0, $rl['limit'] - $rl['used']));

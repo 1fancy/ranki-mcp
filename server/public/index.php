@@ -305,6 +305,14 @@ pre.code .c{color:var(--ink-4)}
 .skill-block ul{list-style:none;padding:0;margin:1rem 0 1.5rem;display:flex;flex-direction:column;gap:.5rem}
 .skill-block ul li{color:var(--ink-2);font-size:.9rem;padding-left:1.4rem;position:relative;line-height:1.55}
 .skill-block ul li::before{content:'→';color:var(--orange);position:absolute;left:0;top:0;font-weight:600}
+.skill-tabs{margin:0}
+.skill-tabs-list{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.7rem;border-bottom:1px solid var(--line)}
+.skill-tabs-list button{background:transparent;border:0;color:var(--ink-3);font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:.55rem .85rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;white-space:nowrap}
+.skill-tabs-list button:hover{color:var(--ink-2)}
+.skill-tabs-list button[aria-selected="true"]{color:var(--orange);border-bottom-color:var(--orange)}
+.skill-tab-panel{display:none}
+.skill-tab-panel.active{display:block}
+.skill-tab-panel pre{margin:0}
 
 /* ============== "WHY" section ============== */
 .why-flow{max-width:880px;margin:0 auto;padding:1.5rem;background:linear-gradient(180deg,rgba(13,15,20,.6),transparent);border:1px solid var(--line);border-radius:16px}
@@ -414,7 +422,7 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
     <div class="container">
       <div class="eyebrow"><span class="live-dot"></span> Free SEO audit tool · MCP server · 21 SEO tools</div>
       <h1>Free <span class="accent">SEO and AEO audit tool</span><br>for vibe coders</h1>
-      <p class="lede">The free Model Context Protocol server that turns Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop into a senior SEO and AEO consultant. Audits any URL, measures real Core Web Vitals via Google PageSpeed Insights, generates <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, <span class="mono">robots.txt</span> and JSON-LD schema, and — this is the part nothing else does — instructs the agent to convert your images to WebP / AVIF, rewrite <span class="mono">&lt;img&gt;</span> tags into responsive <span class="mono">&lt;picture&gt;</span> with <span class="mono">srcset</span> and <span class="mono">alt</span>, and commit the changes to your repo.</p>
+      <p class="lede">Rank on Google. Get cited by ChatGPT, Claude and Perplexity. Pass Core Web Vitals. Fix the slow images, the missing schema and the broken meta &mdash; all from inside Claude Code, Cursor, Windsurf or ChatGPT Desktop, in minutes, without learning SEO. One install. 21 tools. Free.</p>
       <div class="cta-row">
         <a href="#install" class="btn btn-primary btn-xl">Install in 30 seconds →</a>
         <a href="#tools" class="btn btn-ghost btn-xl">See the 21 SEO tools</a>
@@ -478,8 +486,8 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
   <section id="tools">
     <div class="container">
       <div class="section-head">
-        <h2>21 tools that don't just report &mdash; they fix</h2>
-        <p>The MCP returns checklists, deploy-ready files, fix recipes, image conversion commands and the responsive HTML to paste in. Your agent reads the prescription and writes the changes directly into your repo &mdash; rewrites <span class="mono">&lt;img&gt;</span> tags into <span class="mono">&lt;picture&gt;</span>, adds <span class="mono">alt</span>, drops in JSON-LD, generates <span class="mono">llms.txt</span>, deletes hidden pages from <span class="mono">sitemap.xml</span>. Then re-runs the audit to prove the score moved.</p>
+        <h2>21 tools. One job: rank you.</h2>
+        <p>From "I just shipped my site" to ranking on Google and getting cited by AI search &mdash; without you ever opening a 40-page audit PDF. Each tool returns exactly what your agent needs to fix the issue and move on.</p>
         <div class="tools-cats" style="margin-top:1.4rem">
           <span class="tools-cat-pill"><span class="dot"></span> 15 free</span>
           <span class="tools-cat-pill"><span class="dot key"></span> 6 with API key</span>
@@ -683,28 +691,71 @@ EOF</pre>
           </div>
         </div>
         <div>
-          <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># Claude Code · Claude Desktop (user-level)</span>
-mkdir -p ~/.claude/skills/ranki-seo &amp;&amp; \
-curl -fsSL https://raw.githubusercontent.com/\
-1fancy/ranki-seo-skills/main/skills/\
-ranki-seo/SKILL.md \
+          <div class="skill-tabs" role="tablist" aria-label="Pick your AI editor">
+            <div class="skill-tabs-list">
+              <button role="tab" aria-selected="true" data-skill-tab="cli" onclick="rkSkillTab(this)">One-line CLI</button>
+              <button role="tab" aria-selected="false" data-skill-tab="claude-code" onclick="rkSkillTab(this)">Claude Code</button>
+              <button role="tab" aria-selected="false" data-skill-tab="claude-desktop" onclick="rkSkillTab(this)">Claude Desktop</button>
+              <button role="tab" aria-selected="false" data-skill-tab="cursor" onclick="rkSkillTab(this)">Cursor</button>
+              <button role="tab" aria-selected="false" data-skill-tab="windsurf" onclick="rkSkillTab(this)">Windsurf</button>
+              <button role="tab" aria-selected="false" data-skill-tab="claude-web" onclick="rkSkillTab(this)">Claude.ai web</button>
+              <button role="tab" aria-selected="false" data-skill-tab="agents" onclick="rkSkillTab(this)">AGENTS.md</button>
+            </div>
+
+            <div class="skill-tab-panel active" data-skill-panel="cli">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># Installs MCP + Skill for whichever editor you have</span>
+npx @ranki/cli install</pre>
+            </div>
+
+            <div class="skill-tab-panel" data-skill-panel="claude-code">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># User-level Skill (works in every project)</span>
+mkdir -p ~/.claude/skills/ranki-seo
+curl -fsSL https://raw.githubusercontent.com/1fancy/ranki-seo-skills/main/skills/ranki-seo/SKILL.md \
   -o ~/.claude/skills/ranki-seo/SKILL.md
 
-<span class="c"># Cursor (project-level rule file)</span>
-curl -fsSL https://raw.githubusercontent.com/\
-1fancy/ranki-seo-skills/main/skills/\
-ranki-seo/.cursorrules -o .cursorrules
+<span class="c"># Then restart Claude Code.</span></pre>
+            </div>
 
-<span class="c"># Windsurf (project-level rule file)</span>
-curl -fsSL https://raw.githubusercontent.com/\
-1fancy/ranki-seo-skills/main/skills/\
-ranki-seo/.windsurfrules -o .windsurfrules
+            <div class="skill-tab-panel" data-skill-panel="claude-desktop">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># Same file path as Claude Code &mdash; user-level Skill</span>
+mkdir -p ~/.claude/skills/ranki-seo
+curl -fsSL https://raw.githubusercontent.com/1fancy/ranki-seo-skills/main/skills/ranki-seo/SKILL.md \
+  -o ~/.claude/skills/ranki-seo/SKILL.md
 
-<span class="c"># Claude.ai web — Projects (no file install)</span>
-<span class="c"># Open claude.ai → Projects → New project</span>
-<span class="c"># Custom instructions: paste the body of</span>
-<span class="c"># SKILL.md (skip the YAML frontmatter).</span>
-<span class="c"># Every chat in the Project auto-loads it.</span></pre>
+<span class="c"># Restart Claude Desktop.</span></pre>
+            </div>
+
+            <div class="skill-tab-panel" data-skill-panel="cursor">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># Project-level rule file (run in your repo root)</span>
+curl -fsSL https://raw.githubusercontent.com/1fancy/ranki-seo-skills/main/skills/ranki-seo/.cursorrules \
+  -o .cursorrules
+
+<span class="c"># Cursor picks it up automatically &mdash; no restart needed.</span></pre>
+            </div>
+
+            <div class="skill-tab-panel" data-skill-panel="windsurf">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># Project-level rule file (run in your repo root)</span>
+curl -fsSL https://raw.githubusercontent.com/1fancy/ranki-seo-skills/main/skills/ranki-seo/.windsurfrules \
+  -o .windsurfrules</pre>
+            </div>
+
+            <div class="skill-tab-panel" data-skill-panel="claude-web">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># No file install &mdash; uses Claude.ai Projects</span>
+<span class="c"># 1. claude.ai &rarr; Projects &rarr; New project</span>
+<span class="c"># 2. Custom instructions:</span>
+<span class="c">#    paste the body of SKILL.md (skip the YAML frontmatter)</span>
+<span class="c"># 3. Every chat in the Project auto-loads it.</span>
+
+<span class="c"># Get the body here:</span>
+<span class="c"># https://raw.githubusercontent.com/1fancy/ranki-seo-skills/main/skills/ranki-seo/SKILL.md</span></pre>
+            </div>
+
+            <div class="skill-tab-panel" data-skill-panel="agents">
+              <pre class="code"><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="c"># Generic agent file (Continue.dev, Zed AI, OpenAI Codex, custom MCP)</span>
+curl -fsSL https://raw.githubusercontent.com/1fancy/ranki-seo-skills/main/skills/ranki-seo/AGENTS.md \
+  -o AGENTS.md</pre>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -713,33 +764,33 @@ ranki-seo/.windsurfrules -o .windsurfrules
   <section id="why">
     <div class="container">
       <div class="section-head">
-        <h2>The MCP doesn't just report. Your agent fixes.</h2>
-        <p>Other SEO tools email you a 40-page PDF. Ranki MCP returns the exact files, commands and HTML snippets the agent needs &mdash; then your agent <em>writes them into your repo</em>, runs <span class="mono">sharp</span> to convert your images, rewrites every <span class="mono">&lt;img&gt;</span> as a responsive <span class="mono">&lt;picture&gt;</span>, drops in <span class="mono">alt</span> text, ships JSON-LD, generates <span class="mono">llms.txt</span>, and re-runs the audit to confirm the score moved.</p>
+        <h2>Other SEO tools send you a 40-page PDF. We ship the fix.</h2>
+        <p>You ask. The agent diagnoses, fixes your code, and proves the score moved &mdash; in one conversation. Lighthouse goes from 42 to 96. AEO goes from 38 to 96. Slow pages get fast. ChatGPT and Claude start citing you within weeks.</p>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;max-width:1000px;margin:1rem auto 0;padding:0 1rem">
         <div style="padding:1.3rem;border:1px solid var(--line);border-radius:10px;background:rgba(247,144,108,.03)">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 1 · DIAGNOSE</div>
-          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Agent calls <span class="mono">audit_speed</span>.</strong> We hit Google PageSpeed Insights, return Lighthouse + Core Web Vitals + the 4 oversized images crushing the LCP.</p>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 1 · YOU ASK</div>
+          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">&ldquo;Audit my site and fix what&rsquo;s broken.&rdquo;</strong> Plain English. No SEO knowledge required. Works on any URL.</p>
         </div>
         <div style="padding:1.3rem;border:1px solid var(--line);border-radius:10px;background:rgba(247,144,108,.03)">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 2 · PRESCRIBE</div>
-          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Agent calls <span class="mono">optimize_images</span>.</strong> We hand back the exact <span class="mono">sharp-cli</span> commands, target dimensions and the <span class="mono">&lt;picture&gt;</span> markup with <span class="mono">srcset</span> + <span class="mono">alt</span>.</p>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 2 · AGENT DIAGNOSES</div>
+          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Finds the real problems.</strong> The slow images. The missing schema. The pages Google hates. The H2s that ChatGPT can&rsquo;t cite.</p>
         </div>
         <div style="padding:1.3rem;border:1px solid var(--line);border-radius:10px;background:rgba(247,144,108,.03)">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 3 · FIX</div>
-          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Agent fixes your code.</strong> Runs <span class="mono">sharp</span>, generates <span class="mono">.avif</span> + <span class="mono">.webp</span>, rewrites every <span class="mono">&lt;img&gt;</span> as <span class="mono">&lt;picture&gt;</span>, commits.</p>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 3 · AGENT FIXES</div>
+          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Writes the changes into your code.</strong> Compresses your images. Adds the missing meta. Generates the files. Commits.</p>
         </div>
         <div style="padding:1.3rem;border:1px solid var(--line);border-radius:10px;background:rgba(247,144,108,.03)">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 4 · VERIFY</div>
-          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Re-runs <span class="mono">audit_speed</span>.</strong> Confirms LCP dropped, Lighthouse hit 96, AEO score went from 38 to 96. All in one Claude / Cursor turn.</p>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--orange);letter-spacing:.08em;margin-bottom:.6rem">STEP 4 · YOU RANK</div>
+          <p style="color:var(--ink-2);font-size:.92rem;line-height:1.6"><strong style="color:var(--ink)">Lighthouse green. AEO 96/100.</strong> Deploy and ChatGPT, Claude, Perplexity and Google start citing you within weeks.</p>
         </div>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.5rem;max-width:880px;margin:2.5rem auto 0;padding:0 1rem">
-        <p style="padding:1.1rem 1.3rem;border-left:2px solid var(--orange);color:var(--ink-2);font-size:.92rem;line-height:1.65"><strong style="color:var(--ink);display:block;margin-bottom:.3rem">Deterministic output.</strong>Every audit returns the same prescription for the same site &mdash; no model temperature, no hallucinations.</p>
-        <p style="padding:1.1rem 1.3rem;border-left:2px solid var(--orange);color:var(--ink-2);font-size:.92rem;line-height:1.65"><strong style="color:var(--ink);display:block;margin-bottom:.3rem">No vendor lock-in.</strong>Open source. Stop using us tomorrow &mdash; your code is yours and the recipes still work.</p>
-        <p style="padding:1.1rem 1.3rem;border-left:2px solid var(--orange);color:var(--ink-2);font-size:.92rem;line-height:1.65"><strong style="color:var(--ink);display:block;margin-bottom:.3rem">Real ranking data.</strong>Paid Ranki.io accounts pull live GSC keywords, AI citations and rank tracking straight into your IDE.</p>
+        <p style="padding:1.1rem 1.3rem;border-left:2px solid var(--orange);color:var(--ink-2);font-size:.92rem;line-height:1.65"><strong style="color:var(--ink);display:block;margin-bottom:.3rem">Same answer, every time.</strong>Audits return identical results for the same site &mdash; no AI guessing, no hallucinated &ldquo;you should probably&rdquo;.</p>
+        <p style="padding:1.1rem 1.3rem;border-left:2px solid var(--orange);color:var(--ink-2);font-size:.92rem;line-height:1.65"><strong style="color:var(--ink);display:block;margin-bottom:.3rem">Open source forever.</strong>MIT licensed. Self-host the whole thing if you want. Stop using us tomorrow and the fixes still work.</p>
+        <p style="padding:1.1rem 1.3rem;border-left:2px solid var(--orange);color:var(--ink-2);font-size:.92rem;line-height:1.65"><strong style="color:var(--ink);display:block;margin-bottom:.3rem">Your real ranking data.</strong>Paid Ranki.io accounts plug in your Google Search Console keywords, AI citations and rank tracking &mdash; right in your IDE.</p>
       </div>
     </div>
   </section>
@@ -850,6 +901,19 @@ function nextLine(){
 }
 term.innerHTML = '<span class="p">›</span> <span class="cursor"></span>';
 setTimeout(() => { term.innerHTML = ''; nextLine(); }, 800);
+
+// ============== Skill install tabs ==============
+function rkSkillTab(btn){
+  const target = btn.dataset.skillTab;
+  const container = btn.closest('.skill-tabs');
+  if (!container) return;
+  container.querySelectorAll('[role="tab"]').forEach(b => {
+    b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+  });
+  container.querySelectorAll('.skill-tab-panel').forEach(p => {
+    p.classList.toggle('active', p.dataset.skillPanel === target);
+  });
+}
 
 // ============== Copy-to-clipboard ==============
 function copyCode(btn){

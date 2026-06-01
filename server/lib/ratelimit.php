@@ -16,9 +16,9 @@ declare(strict_types=1);
 const RK_MCP_FREE_LIMIT = 5;
 const RK_MCP_KEYED_LIMIT = 500;
 
-function rk_mcp_check_ip(string $ip): array
+function rk_mcp_check_ip(string $ip, ?int $limitOverride = null): array
 {
-    return rk_mcp_check_scope('ip:'.$ip, RK_MCP_FREE_LIMIT);
+    return rk_mcp_check_scope('ip:'.$ip, $limitOverride ?? RK_MCP_FREE_LIMIT);
 }
 
 function rk_mcp_check_key(string $apiKey): array
@@ -29,6 +29,11 @@ function rk_mcp_check_key(string $apiKey): array
 }
 
 /**
+ * Atomic read-modify-write of the daily counter. flock() prevents the
+ * race where two concurrent requests both read N, both write N+1, and
+ * the cap leaks. fopen('c+') creates the file if missing and opens for
+ * read+write (which flock requires).
+ *
  * @return array{allowed: bool, used: int, limit: int, reset_at: string, seconds_until_reset: int}
  */
 function rk_mcp_check_scope(string $scope, int $limit): array
@@ -41,12 +46,24 @@ function rk_mcp_check_scope(string $scope, int $limit): array
     $day = gmdate('Y-m-d');
     $file = $dir.'/'.sha1($scope.'|'.$day);
 
-    $count = is_file($file) ? (int) file_get_contents($file) : 0;
-    $allowed = $count < $limit;
-
-    if ($allowed) {
-        @file_put_contents($file, (string) ($count + 1));
-        $count++;
+    $count = 0;
+    $allowed = false;
+    $fh = @fopen($file, 'c+');
+    if ($fh !== false) {
+        if (flock($fh, LOCK_EX)) {
+            $existing = stream_get_contents($fh);
+            $count = is_string($existing) && $existing !== '' ? (int) $existing : 0;
+            $allowed = $count < $limit;
+            if ($allowed) {
+                $count++;
+                ftruncate($fh, 0);
+                rewind($fh);
+                fwrite($fh, (string) $count);
+                fflush($fh);
+            }
+            flock($fh, LOCK_UN);
+        }
+        fclose($fh);
     }
 
     $tomorrow = gmmktime(0, 0, 0, (int) gmdate('n'), (int) gmdate('j') + 1, (int) gmdate('Y'));

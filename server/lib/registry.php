@@ -343,23 +343,154 @@ function rk_mcp_api_call(string $endpoint, string $apiKey, string $method = 'GET
 }
 
 /**
- * Fetch a URL's HTML with a short timeout. Used by audit_aeo / audit_seo.
- * Returns ['html' => string, 'status' => int, 'final_url' => string].
+ * Reject URLs that resolve to private, loopback, link-local or cloud-meta
+ * IPs (SSRF guard). Returns null on success; on failure returns a human
+ * error string suitable to return to the caller.
+ *
+ * This is called *before* curl, and again on every redirect target, so an
+ * attacker can't 302 from a public host into 169.254.169.254 etc.
+ */
+function rk_mcp_url_blocked_reason(string $url): ?string
+{
+    if (mb_strlen($url) > 2048) {
+        return 'URL is too long (max 2048 characters).';
+    }
+    $parts = parse_url($url);
+    if (! is_array($parts) || empty($parts['scheme']) || empty($parts['host'])) {
+        return 'URL is malformed. Expected an absolute http:// or https:// URL.';
+    }
+    $scheme = strtolower($parts['scheme']);
+    if (! in_array($scheme, ['http', 'https'], true)) {
+        return "Only http:// and https:// URLs are accepted (got: {$scheme}://). file:// gopher:// and other schemes are disabled.";
+    }
+
+    $host = strtolower($parts['host']);
+    if ($host === 'localhost' || str_ends_with($host, '.localhost') || $host === 'metadata.google.internal') {
+        return "Refusing to fetch {$host} — it resolves to internal infrastructure.";
+    }
+
+    // Resolve to every IP (v4 + v6) and reject if any is private/reserved.
+    // Using dns_get_record so we cover both families.
+    $ips = [];
+    foreach (dns_get_record($host, DNS_A | DNS_AAAA) ?: [] as $rec) {
+        if (! empty($rec['ip'])) {
+            $ips[] = $rec['ip'];
+        }
+        if (! empty($rec['ipv6'])) {
+            $ips[] = $rec['ipv6'];
+        }
+    }
+    if (filter_var($host, FILTER_VALIDATE_IP)) {
+        $ips[] = $host;
+    }
+    if (empty($ips)) {
+        return "Couldn't resolve host {$host}. Check the URL is correct and the site is reachable.";
+    }
+    foreach ($ips as $ip) {
+        if (rk_mcp_ip_is_private($ip)) {
+            return "Refusing to fetch {$host} — it resolves to a private, loopback, link-local or cloud-metadata address ({$ip}).";
+        }
+    }
+
+    return null;
+}
+
+/**
+ * @return bool true iff the IP is loopback, private, link-local,
+ *              cloud-metadata, multicast, or otherwise non-public.
+ */
+function rk_mcp_ip_is_private(string $ip): bool
+{
+    if (! filter_var($ip, FILTER_VALIDATE_IP)) {
+        return true;
+    }
+    // PHP's built-in filter rejects private + reserved ranges. But it
+    // doesn't cover 169.254.169.254 (AWS IMDS) — actually it does, since
+    // 169.254/16 is reserved. Still pass explicit metadata IPs to be safe.
+    if (in_array($ip, [
+        '169.254.169.254', '169.254.170.2',  // AWS IMDS v1/v2
+        '100.100.100.200',                    // Alibaba Cloud
+        '0.0.0.0',
+    ], true)) {
+        return true;
+    }
+    return ! filter_var(
+        $ip,
+        FILTER_VALIDATE_IP,
+        FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+    );
+}
+
+/**
+ * Fetch a URL's HTML with a short timeout. SSRF-safe: validates scheme,
+ * resolves the host, rejects private IPs, follows up to 5 redirects
+ * manually (re-validating each hop), caps body at 8 MB.
+ *
+ * Returns ['html' => string, 'status' => int, 'final_url' => string,
+ *          'error' => ?string].
  */
 function rk_mcp_fetch_url(string $url, int $timeout = 10): array
 {
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_MAXREDIRS => 5,
-        CURLOPT_TIMEOUT => $timeout,
-        CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; RankiMCP/0.1; +https://ranki.io/developers/mcp)',
-    ]);
-    $html = (string) curl_exec($ch);
-    $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $finalUrl = (string) curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    curl_close($ch);
+    $maxRedirects = 5;
+    $maxBytes = 8 * 1024 * 1024;
+    $current = $url;
 
-    return ['html' => $html, 'status' => $status, 'final_url' => $finalUrl ?: $url];
+    for ($i = 0; $i <= $maxRedirects; $i++) {
+        $reason = rk_mcp_url_blocked_reason($current);
+        if ($reason !== null) {
+            // Throw so the dispatcher's catch turns this into a clean
+            // JSON-RPC error. Returning an "empty html" lets the tool
+            // continue and accidentally reflect the bad URL in output.
+            throw new \RuntimeException($reason);
+        }
+
+        $ch = curl_init($current);
+        $bodySize = 0;
+        $body = '';
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_PROTOCOLS => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+            CURLOPT_REDIR_PROTOCOLS => CURLPROTO_HTTP | CURLPROTO_HTTPS,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; RankiMCP/0.3; +https://ranki.io/developers/mcp)',
+            CURLOPT_WRITEFUNCTION => function ($ch, $chunk) use (&$body, &$bodySize, $maxBytes) {
+                $len = strlen($chunk);
+                if ($bodySize + $len > $maxBytes) {
+                    $body .= substr($chunk, 0, $maxBytes - $bodySize);
+                    return 0; // abort transfer (response is too big)
+                }
+                $body .= $chunk;
+                $bodySize += $len;
+                return $len;
+            },
+        ]);
+        curl_exec($ch);
+        $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $redirectTo = (string) curl_getinfo($ch, CURLINFO_REDIRECT_URL);
+        curl_close($ch);
+
+        if ($status >= 300 && $status < 400 && $redirectTo !== '') {
+            // Absolute URL? curl gives us absolute on most setups, but be
+            // defensive and resolve manually if relative.
+            if (! preg_match('~^https?://~i', $redirectTo)) {
+                $base = parse_url($current);
+                if (str_starts_with($redirectTo, '//')) {
+                    $redirectTo = ($base['scheme'] ?? 'https').':'.$redirectTo;
+                } elseif (str_starts_with($redirectTo, '/')) {
+                    $redirectTo = ($base['scheme'] ?? 'https').'://'.$base['host'].$redirectTo;
+                } else {
+                    // Relative path — drop, too edge-case to follow safely.
+                    return ['html' => $body, 'status' => $status, 'final_url' => $current, 'error' => null];
+                }
+            }
+            $current = $redirectTo;
+            continue;
+        }
+
+        return ['html' => $body, 'status' => $status, 'final_url' => $current, 'error' => null];
+    }
+
+    return ['html' => '', 'status' => 0, 'final_url' => $current, 'error' => 'Too many redirects (>5).'];
 }
