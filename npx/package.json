@@ -1,0 +1,23 @@
+{
+  "name": "@ranki/mcp",
+  "version": "0.1.0",
+  "description": "Ranki.io MCP server — SEO + AEO advisor for Claude Code, Claude Desktop, Cursor. Audits sites, generates sitemap.xml/llms.txt/robots.txt, and bridges your Ranki.io account.",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "ranki-mcp": "index.js"
+  },
+  "files": ["index.js", "README.md"],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["mcp", "model-context-protocol", "seo", "aeo", "claude", "cursor", "ranki", "vibe-coding"],
+  "homepage": "https://mcp.ranki.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranki-io/mcp.git"
+  },
+  "bugs": "https://github.com/ranki-io/mcp/issues",
+  "license": "MIT",
+  "author": "Ranki.io <hello@ranki.io>"
+}
