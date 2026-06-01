@@ -72,6 +72,29 @@ function rk_mcp_tool_definitions(): array
             ],
         ],
         [
+            'name' => 'propose_titles_metas',
+            'description' => "For 'rewrite my titles and meta descriptions' — reads one or more URLs (or a free-text description for un-deployed pages), extracts the actual page facts (h1, first paragraph, current title, detected intent), and returns a Markdown table with 5 title + meta description CANDIDATES per page across different angles (descriptive, benefit-led, question-format, specific, keyword-first). User picks per page, calling AI applies. Built-in length validation (50-65 char titles, 140-160 char metas). No API key, no LLM tokens spent.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'urls' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Up to 8 absolute URLs to analyze.'],
+                    'pages_description' => ['type' => 'string', 'description' => 'Optional free-text description for pages not deployed yet.'],
+                    'focus_keyword' => ['type' => 'string', 'description' => 'Optional brand or primary keyword to front-load in candidates.'],
+                ],
+            ],
+        ],
+        [
+            'name' => 'audit_hidden_pages',
+            'description' => "For 'which pages should I hide from search engines?' — classifies a list of paths/URLs OR crawls a domain (1 level deep, capped 100 URLs) and returns a Markdown table marking each as `robots-disallow` (admin, API, drafts), `noindex` (login, account, thank-you, errors), `keep` (real content) or `unsure` (review). Includes a ready-to-paste robots.txt block + noindex meta snippet. Pure pattern matching, zero LLM tokens.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'urls' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Paths or URLs to classify.'],
+                    'domain' => ['type' => 'string', 'description' => 'Site root to crawl 1 level deep instead of (or in addition to) urls.'],
+                ],
+            ],
+        ],
+        [
             'name' => 'audit_aeo',
             'description' => 'Audit a URL for Answer Engine Optimization. Checks: FAQPage / Article JSON-LD, definitional intro (<80 words, "X is" pattern), author byline, llms.txt presence, robots.txt allowing GPTBot/ClaudeBot/PerplexityBot, answer-style H2/H3 headings, structured tables. Returns scorecard + per-check fix recipes. No API key required.',
             'inputSchema' => [
