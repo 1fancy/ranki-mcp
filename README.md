@@ -1,14 +1,12 @@
-# Ranki MCP — Free SEO and AEO audit tool for Cursor, Claude Code, Windsurf and ChatGPT
+# Ranki MCP — Free SEO, AEO, speed and image-optimization MCP for Cursor, Claude Code, Windsurf and ChatGPT
 
-> The free Model Context Protocol (MCP) server that turns Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop into a senior SEO and AEO consultant. Audits any URL, generates `sitemap.xml`, `llms.txt`, `robots.txt`, FAQPage schema and JSON-LD, proposes title and meta description candidates, flags pages that should be hidden from search engines, finds keyword gaps and explains every SEO term in plain English.
+> The MCP that doesn't just report — your agent fixes. Audits any URL for SEO and Answer Engine Optimization, measures real Core Web Vitals via Google PageSpeed Insights, and instructs your agent to convert images to AVIF and WebP, rewrite `<img>` tags into responsive `<picture>` with `srcset` and `alt`, drop in JSON-LD schema, generate `sitemap.xml` / `llms.txt` / `robots.txt`, classify hidden pages — then re-runs the audit to prove the score moved. All inside Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop.
 
 [![MCP 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-orange)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm @ranki/mcp](https://img.shields.io/npm/v/@ranki/mcp.svg?label=%40ranki%2Fmcp)](https://www.npmjs.com/package/@ranki/mcp)
 [![live mcp.ranki.io](https://img.shields.io/badge/live-mcp.ranki.io-black)](https://mcp.ranki.io)
 [![Skill repo](https://img.shields.io/badge/companion-ranki--seo--skills-orange)](https://github.com/1fancy/ranki-seo-skills)
-
-You shipped a site. It runs. Lighthouse is green. Six weeks later organic traffic is still zero and ChatGPT, Claude, Perplexity and Google AI Overviews never mention it. The reason is almost always the same: the site is missing `sitemap.xml`, `llms.txt`, FAQPage JSON-LD, the right `robots.txt` and the structural signals AI search engines look for. Ranki MCP fixes that from inside your AI editor.
 
 ## Install in one line
 
@@ -20,60 +18,76 @@ The CLI auto-detects which AI editor you have installed (Claude Code, Claude Des
 
 Prefer the manual JSON snippet? Examples for each editor are in the [Install](#install) section below.
 
-## What it actually does — 15 tools
+## What it actually does — 21 tools
 
-The MCP server exposes 15 tools. Your AI editor calls them like any other MCP tool; they return Markdown reports your editor renders inline.
+The MCP server exposes 21 tools. Your agent calls them like any other MCP tool; they return Markdown reports your agent renders inline and then acts on — converting files, rewriting HTML, generating new ones, committing the result.
 
 ### Audit
-- **`audit_seo(url)`** — 10-check on-page SEO scorecard: title length, meta description, H1 uniqueness, canonical, viewport, HTTPS, OpenGraph completeness, image alt coverage, internal link count, JSON-LD presence. Returns score 0-100 with per-failure fix recipes.
+- **`audit_seo(url)`** — 10-check on-page SEO scorecard: title length, meta description, H1 uniqueness, canonical, viewport, HTTPS, OpenGraph completeness, image alt coverage, internal link count, JSON-LD presence. Returns score 0–100 with per-failure fix recipes.
 - **`audit_aeo(url)`** — 8-check Answer Engine Optimization scorecard: FAQPage / Article JSON-LD, definitional intro under 80 words, author byline, `llms.txt` presence, `robots.txt` allows GPTBot / ClaudeBot / PerplexityBot, answer-style H2/H3 headings, comparison tables.
 - **`audit_hidden_pages(urls, domain)`** — classifies each path as `robots-disallow`, `noindex`, `keep` or `unsure` with reasoning. Catches admin routes, API endpoints, drafts, login pages, account dashboards, thank-you pages, build artifacts and search-result URLs. Returns a ready-to-paste `robots.txt` block.
+
+### Speed and images — this is the part nothing else does
+- **`audit_speed(url, strategy)`** — real Lighthouse scores (Performance, Accessibility, SEO, Best Practices) and Core Web Vitals (LCP, CLS, INP, FCP, TTFB) via Google PageSpeed Insights. Returns image opportunities with bytes saved per file, render-blocking JS / CSS, and failing on-page SEO audits. Default strategy is `mobile` (Google ranks mobile-first).
+- **`audit_core_web_vitals(url)`** — one paragraph per metric with the literal fix recipe. *"LCP element is hero.png at 2.4 MB, convert to WebP saves 1.8 MB → -1.1s LCP."* Picks the LCP element URL out of Lighthouse so the agent knows exactly which file to optimize.
+- **`optimize_images(images, max_width)`** — for each image: target format (AVIF + WebP), responsive 1×/2× widths, alt-text suggestion, the literal `sharp-cli` / `cwebp` / `avifenc` commands, and a ready-to-paste `<picture>` block with `srcset`. Your agent runs the conversion locally in the repo and rewrites the `<img>` tags.
 
 ### Generate
 - **`generate_sitemap_xml(urls)`** — builds a deploy-ready `sitemap.xml` from a URL list with current `lastmod` timestamps.
 - **`generate_llms_txt(site_name, summary, key_pages)`** — generates `llms.txt`, the emerging standard for telling AI crawlers what your site is and which pages to cite.
 - **`generate_robots_txt(sitemap_url, allow_ai, disallow_paths)`** — builds a `robots.txt` that explicitly allows or denies GPTBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot and Google-Extended.
 
-### Content & strategy
+### Content and strategy
 - **`seo_starter_kit(domain)`** — returns the four baseline files most vibe-coded sites are missing (`robots.txt`, `sitemap.xml`, `llms.txt`, JSON-LD) ready to paste into your repo.
 - **`find_topic_ideas(url)`** — reads your homepage, infers your niche, and returns a structured brief for generating 15 article topics across informational, commercial and transactional intent with prioritization criteria.
 - **`find_keyword_gap(url, competitors)`** — returns a step-by-step methodology for finding keywords competitors rank for but you don't. If no competitors are given, instructs your editor to ask first.
 - **`propose_titles_metas(urls, focus_keyword)`** — extracts the actual title, h1 and first paragraph from each URL (or accepts a free-text description for un-deployed pages), then returns a Markdown table with 5 title and meta description candidates per page across 5 angles (descriptive, benefit-led, question-format, specific-number, keyword-first). Each candidate is flagged for length compliance.
-- **`explain_seo_terms(category)`** — plain-English glossary of 40+ SEO and AEO terms: SEO, AEO, GEO, JSON-LD, FAQPage, canonical, `llms.txt`, Core Web Vitals, E-E-A-T, helpful content update, doorway pages, and more. Filter by category: basics, AEO, technical, analytics, penalty.
+- **`explain_seo_terms(category)`** — reference glossary of 40+ SEO and AEO terms: SEO, AEO, GEO, JSON-LD, FAQPage, canonical, `llms.txt`, Core Web Vitals, E-E-A-T, helpful content update, doorway pages, and more. Filter by category: basics, AEO, technical, analytics, penalty.
 
-### Install & verify
+### Install
 - **`install_skill(agent)`** — returns the install commands for the [ranki-seo-skills](https://github.com/1fancy/ranki-seo-skills) Skill across Claude Code, Claude Desktop, Cursor, Windsurf, Claude.ai web Projects and generic `AGENTS.md` agents.
-- **`get_account()`** — confirms your API key works and returns your account snapshot: name, email, plan, daily and monthly quota, current usage. Requires API key.
 
-### Bridge to your Ranki.io content
-- **`list_projects()`** — lists projects in your [Ranki.io](https://ranki.io) account. Requires API key.
-- **`get_article(article_id)`** — fetches a single article by its `nano_id`: title, HTML, focus keywords, table of contents, embedded image URLs, SEO score. Requires API key.
+### Your Ranki.io account — real ranking data inside your IDE (paid API key)
+- **`get_account()`** — whoami for your API key: name, email, plan, daily and monthly limits, current usage.
+- **`list_projects()`** — lists projects in your [Ranki.io](https://ranki.io) account.
+- **`get_article(article_id)`** — fetches a single article by its `nano_id`: title, HTML, focus keywords, table of contents, embedded image URLs, SEO score.
+- **`list_rank_tracking(project_id)`** — Google Search Console summary for a project: 28-day totals, top 20 keywords by clicks, top 20 opportunity keywords (position > 10 with impressions — the easy wins).
+- **`list_gsc_keywords(project_id)`** — full paginated GSC keyword list, sortable by clicks / impressions / position / CTR.
+- **`ai_visibility(project_id)`** — recorded AI-citation snapshots: which of your tracked topics appeared in ChatGPT, Claude, Perplexity and Google AI Overview SERPs at capture time.
 
 ## How a typical session looks
 
 ```text
-You:    audit https://myapp.dev for AEO and fix it
+You:    audit my site speed and fix the slow images
 
-Claude: → Calling ranki.audit_aeo(url="https://myapp.dev")
-        ← Score: 38/100. Missing: FAQPage schema, llms.txt, author byline,
-                          answer-style H2s, robots.txt blocks ClaudeBot.
-        → Editing public/robots.txt to allow AI crawlers…
-        → Calling ranki.generate_llms_txt(...) and writing public/llms.txt…
-        → Editing app/layout.tsx to inject FAQPage JSON-LD…
-        → Calling ranki.audit_aeo again to verify…
-        ← Score: 88/100.
+Claude: → Calling ranki.audit_speed(url="https://myapp.dev")
+        ← Lighthouse: 42 perf · LCP 4.8s · 3 images blocking the paint.
+        → Calling ranki.optimize_images([hero.png, banner.jpg, card.png])…
+        ← 3 files, recipes returned.
+        → Running sharp-cli to convert hero.png → hero.avif + hero.webp + hero@2x.avif…
+        → Editing app/page.tsx — rewriting <img> as <picture srcset>, adding alt text…
+        → Calling ranki.audit_speed again to verify…
+        ← Lighthouse: 96 perf · LCP 1.4s.
+
+You:    now find pages that shouldn't be in Google
+
+Claude: → Calling ranki.audit_hidden_pages(domain="https://myapp.dev")
+        ← 8 robots-disallow, 12 noindex, 118 keep, 4 unsure.
+        → Editing public/robots.txt to disallow /admin /dashboard /checkout /account…
+        → Adding <meta name="robots" content="noindex"> to app/search/page.tsx…
+        Done. Submit URL-removal requests in Search Console for the 8 admin pages.
 ```
 
-The Skill file (in [ranki-seo-skills](https://github.com/1fancy/ranki-seo-skills)) tells your editor when to call which tool, in what order, and where in your repo to apply each fix.
+The Skill file (in [ranki-seo-skills](https://github.com/1fancy/ranki-seo-skills)) tells your agent when to call which tool, in what order, and where in your repo to apply each fix.
 
 ## Rate limits
 
-| Tier | Daily cap | Scope | Bridge tools |
+| Tier | Daily cap | Scope | Tools available |
 |---|---|---|---|
-| Free (no key) | 5 calls | per IP | not available |
-| Free account ([app.ranki.io/developer](https://app.ranki.io/developer)) | 500 calls | per API key | `list_projects`, `get_article`, `get_account` unlocked |
+| No key | 5 calls | per IP | 15 free tools (audits, generators, speed, image optimization, content strategy, install) |
+| Ranki.io API key | 500 calls | per key | All 21 tools, including the 6 bridge tools that read your real GSC keywords, rank tracking and AI citations from your Ranki.io account |
 
-`X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset` are returned on every response. The dispatcher's error messages include the reset countdown and the upgrade path.
+Get a key at [app.ranki.io/developer](https://app.ranki.io/developer). `X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset` are returned on every response. The dispatcher's error messages include the reset countdown and the upgrade path.
 
 ---
 
@@ -95,7 +109,7 @@ Add to `~/.claude/claude_desktop_config.json`:
 }
 ```
 
-Restart Claude Desktop. The MCP indicator should show **ranki** with 15 tools.
+Restart Claude Desktop. The MCP indicator should show **ranki** with 21 tools.
 
 ### Cursor (HTTP transport, no npx needed)
 
@@ -192,7 +206,7 @@ Claude (via Ranki MCP):
 ┌────────────────────────┐         ┌──────────────────────────┐
 │  Claude / Cursor / etc │         │  mcp.ranki.io (PHP)      │
 │                        │         │                          │
-│  1. Sees 15 tools      │ JSON-RPC│  - 15 tool definitions   │
+│  1. Sees 21 tools      │ JSON-RPC│  - 21 tool definitions   │
 │  2. Decides to use one ├────────►│  - HTTP + stdio (npx)    │
 │  3. Receives advice    │         │  - 5/IP or 500/key per   │
 │  4. Acts on the repo   │         │    UTC day rate limit    │

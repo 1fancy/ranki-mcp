@@ -11,7 +11,7 @@ declare(strict_types=1);
  * those and skips IP rate-limiting (key has its own quota).
  */
 
-const RK_MCP_KEYED_TOOLS = ['list_projects', 'get_article', 'get_account'];
+const RK_MCP_KEYED_TOOLS = ['list_projects', 'get_article', 'get_account', 'list_rank_tracking', 'list_gsc_keywords', 'ai_visibility'];
 
 function rk_mcp_is_keyed_tool(string $name): bool
 {
@@ -95,6 +95,42 @@ function rk_mcp_tool_definitions(): array
             ],
         ],
         [
+            'name' => 'audit_speed',
+            'description' => "Measure real Core Web Vitals and Lighthouse scores for a URL via Google PageSpeed Insights. Returns Performance / Accessibility / SEO / Best Practices scores; LCP / CLS / INP / FCP / TTFB values; image opportunities with bytes saved per file; render-blocking JS / CSS; failing on-page SEO audits. The calling agent uses this to decide what to fix first — most commonly: call `optimize_images` next, then convert the actual files and rewrite <img> markup. No API key required.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'url' => ['type' => 'string', 'description' => 'Full URL to test'],
+                    'strategy' => ['type' => 'string', 'description' => '"mobile" (default — Google ranks mobile-first) or "desktop"'],
+                ],
+                'required' => ['url'],
+            ],
+        ],
+        [
+            'name' => 'audit_core_web_vitals',
+            'description' => 'Focused Core Web Vitals audit — same PageSpeed Insights backend as `audit_speed`, but returns one paragraph per metric (LCP / CLS / INP) with literal fix recipes ("LCP element is hero.png at 2.4MB, convert to WebP saves 1.8MB → -1.1s LCP"). Picks the LCP element URL out of Lighthouse so the agent knows exactly which file to optimize. No API key required.',
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'url' => ['type' => 'string', 'description' => 'Full URL to test'],
+                    'strategy' => ['type' => 'string', 'description' => '"mobile" or "desktop". Default: mobile.'],
+                ],
+                'required' => ['url'],
+            ],
+        ],
+        [
+            'name' => 'optimize_images',
+            'description' => "For each image URL the user gives (typically from `audit_speed` opportunities), return: target format (AVIF + WebP), target widths for a responsive 1x / 2x set, alt-text suggestion from the file stem, plus a ready-to-paste responsive `<picture>` block with `srcset`. Also returns the literal CLI command to run (sharp-cli or cwebp/avifenc) so the agent converts the files locally in the repo. Pure heuristics — no API key required, no conversion server-side.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'images' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => '1-20 image URLs or relative paths'],
+                    'max_width' => ['type' => 'integer', 'description' => 'Target max width for the 1x variant in pixels. Default: 1600.'],
+                ],
+                'required' => ['images'],
+            ],
+        ],
+        [
             'name' => 'audit_aeo',
             'description' => 'Audit a URL for Answer Engine Optimization. Checks: FAQPage / Article JSON-LD, definitional intro (<80 words, "X is" pattern), author byline, llms.txt presence, robots.txt allowing GPTBot/ClaudeBot/PerplexityBot, answer-style H2/H3 headings, structured tables. Returns scorecard + per-check fix recipes. No API key required.',
             'inputSchema' => [
@@ -173,6 +209,46 @@ function rk_mcp_tool_definitions(): array
                 'type' => 'object',
                 'properties' => ['article_id' => ['type' => 'string', 'description' => 'nano_id of the article (e.g. LISQJJOGF). Get one from list_projects then drill into a project.']],
                 'required' => ['article_id'],
+            ],
+        ],
+        [
+            'name' => 'list_rank_tracking',
+            'description' => "Returns the Google Search Console summary for a Ranki.io project: 28-day totals (clicks / impressions / keyword count), top 20 keywords by clicks, and top 20 opportunity keywords (position > 10, impressions ≥ 10 — easy wins). Use this to anchor a content session in real ranking data instead of guessing. Requires X-API-Key + the project must have GSC connected at app.ranki.io.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'project_id' => ['type' => 'string', 'description' => "nano_id of the project (get from `list_projects`)"],
+                ],
+                'required' => ['project_id'],
+            ],
+        ],
+        [
+            'name' => 'list_gsc_keywords',
+            'description' => "Paginated full list of Google Search Console keywords for a Ranki.io project (current 28-day window). Use when `list_rank_tracking` summary isn't enough — e.g. 'show me every keyword with impressions > 50' or 'sort by position ascending'. Requires X-API-Key.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'project_id' => ['type' => 'string', 'description' => 'Project nano_id'],
+                    'sort' => ['type' => 'string', 'description' => 'clicks | impressions | position | ctr (default: clicks)'],
+                    'dir' => ['type' => 'string', 'description' => 'asc | desc (default: desc)'],
+                    'min_impressions' => ['type' => 'integer', 'description' => 'Filter floor on impressions'],
+                    'per_page' => ['type' => 'integer', 'description' => 'Default 50, max 100'],
+                ],
+                'required' => ['project_id'],
+            ],
+        ],
+        [
+            'name' => 'ai_visibility',
+            'description' => "Returns the project's recorded AI-citation snapshots — which of your tracked topics appeared in ChatGPT / Claude / Perplexity / Google AI Overview SERPs at the time of capture. Includes count and percentage of topics currently cited by AI search. Use to decide which content to upgrade for AEO. Requires X-API-Key.",
+            'inputSchema' => [
+                'type' => 'object',
+                'properties' => [
+                    'project_id' => ['type' => 'string', 'description' => 'Project nano_id'],
+                    'since' => ['type' => 'string', 'description' => 'ISO date (default: 30 days ago)'],
+                    'cited_only' => ['type' => 'boolean', 'description' => 'Only return AI-cited rows'],
+                    'per_page' => ['type' => 'integer', 'description' => 'Default 50, max 100'],
+                ],
+                'required' => ['project_id'],
             ],
         ],
     ];
