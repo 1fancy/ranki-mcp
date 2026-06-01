@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <!-- ============== PRIMARY SEO ============== -->
-<title>MCP for Cursor, Claude Code & Windsurf — Free SEO + AEO advisor | Ranki MCP</title>
-<meta name="description" content="Free MCP server crafted by SEO pros for vibe-coders. Plugs into Cursor, Claude Code, Claude Desktop, Windsurf, ChatGPT Desktop, Claude.ai web — audits SEO + Answer Engine Optimization, generates sitemap.xml, llms.txt, robots.txt, finds keyword gaps. Uses your AI credits, never ours.">
-<meta name="keywords" content="MCP server, Model Context Protocol, MCP for Cursor, MCP for Claude Code, MCP for Windsurf, MCP for ChatGPT, AEO MCP, SEO MCP, llms.txt generator, sitemap.xml generator, robots.txt generator, vibe coding SEO, Answer Engine Optimization, Claude SEO tool, Cursor SEO, ChatGPT citation, AI search optimization, vibe coded site SEO, get cited by ChatGPT, get cited by Perplexity, Google AI Overviews SEO, schema.org FAQPage">
+<title>SEO + AEO MCP Server for Cursor, Claude Code & Windsurf — Free SEO Audit, Sitemap, llms.txt | Ranki MCP</title>
+<meta name="description" content="Free SEO + AEO MCP server for vibe-coders. Plug into Cursor, Claude Code, Claude Desktop, Windsurf, ChatGPT Desktop, Lovable — your AI audits SEO + Answer Engine Optimization, generates sitemap.xml, llms.txt, robots.txt, finds keyword gaps and fixes your repo. Built by SEO pros (in the game since 2009). Uses your AI credits, never ours. Open source, MIT.">
+<meta name="keywords" content="MCP server, MCP for SEO, MCP for AEO, SEO MCP, AEO MCP, MCP for Cursor, MCP for Claude Code, MCP for Windsurf, MCP for ChatGPT Desktop, MCP for Lovable, MCP for v0, MCP server for vibe coding, vibe coder SEO tool, SEO tool for AI coding agents, AI coding SEO, Cursor SEO plugin, Claude Code SEO, Windsurf SEO, llms.txt generator, sitemap.xml generator, robots.txt generator, FAQPage schema generator, JSON-LD generator, Answer Engine Optimization MCP, Google AI Overviews SEO, get cited by ChatGPT, get cited by Perplexity, get cited by Claude, AI search optimization, vibe coded site SEO audit, free SEO audit tool, free AEO audit">
 <meta name="author" content="Ranki.io · 1Fancy Inc.">
 <meta name="creator" content="Younes Lamnabhi">
 <meta name="publisher" content="Ranki.io">
@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 
 <!-- ============== OPEN GRAPH ============== -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="MCP for Cursor, Claude Code & Windsurf — Free SEO + AEO advisor">
-<meta property="og:description" content="Drops into your IDE. Audits any URL for SEO + AEO, generates sitemap.xml, llms.txt, robots.txt. Built by SEO pros for vibe-coders. Uses your own AI credits — never ours.">
+<meta property="og:title" content="SEO + AEO MCP Server for Cursor, Claude Code & Windsurf — Ranki MCP">
+<meta property="og:description" content="Free SEO + AEO MCP server for vibe-coders. Audits any URL, generates sitemap.xml + llms.txt + robots.txt, finds keyword gaps. Built by SEO pros. Uses your own AI credits.">
 <meta property="og:url" content="https://mcp.ranki.io/">
 <meta property="og:site_name" content="Ranki MCP">
 <meta property="og:image" content="https://ranki.io/assets/images/favicon-512.png">
@@ -55,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'OPT
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@rankiio">
 <meta name="twitter:creator" content="@younes_lam">
-<meta name="twitter:title" content="MCP for Cursor, Claude Code & Windsurf — Free SEO + AEO advisor">
-<meta name="twitter:description" content="Drops into your IDE. Audits SEO + AEO, generates sitemap.xml / llms.txt / robots.txt. Uses your AI credits, never ours.">
+<meta name="twitter:title" content="SEO + AEO MCP Server for Cursor, Claude Code & Windsurf — Ranki MCP">
+<meta name="twitter:description" content="Free SEO + AEO MCP server for vibe-coders. Audits any URL, generates sitemap.xml + llms.txt + robots.txt. Uses your AI credits, never ours.">
 <meta name="twitter:image" content="https://ranki.io/assets/images/favicon-512.png">
 <meta name="twitter:image:alt" content="Ranki MCP logo">
 
@@ -408,12 +408,12 @@ footer{padding:3rem 0 2rem;border-top:1px solid var(--line);margin-top:3rem}
 
   <section class="hero">
     <div class="container">
-      <div class="eyebrow"><span class="live-dot"></span> Crafted by SEO pros · 13 tools · MIT licensed</div>
-      <h1>Your site ships fast.<br>Then <span class="accent">disappears</span> in AI search.</h1>
-      <p class="lede">Google updates the rules every quarter. AI Overviews ate 30% of clicks. ChatGPT and Perplexity cite the sites with the right schema and ignore everyone else. Penalties happen quietly. You haven't kept up — that's fine, nobody has. Ranki MCP is the playbook your AI editor needs, plugged into Cursor, Claude, Windsurf and ChatGPT. We track the moving target so your Claude can fix your repo using your own AI credits.</p>
+      <div class="eyebrow"><span class="live-dot"></span> Free SEO + AEO MCP server · 13 tools · crafted by SEO pros</div>
+      <h1>The <span class="accent">SEO & AEO MCP server</span><br>for Cursor, Claude & Windsurf</h1>
+      <p class="lede">Free MCP server that audits your site for <strong>SEO</strong> and <strong>AEO</strong> (Answer Engine Optimization), generates <span class="mono">sitemap.xml</span>, <span class="mono">llms.txt</span>, <span class="mono">robots.txt</span>, finds keyword gaps and tells your AI coding agent exactly what to fix. Built for vibe-coders shipping sites with Cursor, Claude Code, Windsurf, ChatGPT Desktop and Lovable — without ever learning what FAQPage schema is. Google rewrites the rules every quarter; AI Overviews ate 30% of clicks; ChatGPT and Perplexity only cite sites with the right structure. We track the moving target — your Claude fixes your repo using your own AI credits.</p>
       <div class="cta-row">
         <a href="#install" class="btn btn-primary btn-xl">Install in 30 seconds →</a>
-        <a href="#tools" class="btn btn-ghost btn-xl">See the 13 tools</a>
+        <a href="#tools" class="btn btn-ghost btn-xl">See the 13 SEO + AEO tools</a>
       </div>
 
       <div class="compat-row">
