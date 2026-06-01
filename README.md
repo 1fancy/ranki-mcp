@@ -1,15 +1,45 @@
-# Ranki MCP — the SEO + AEO advisor for vibe-coders
+# Ranki MCP — get cited by ChatGPT, Claude & Google AI Overviews, without leaving your IDE
 
-> **Free MCP server that audits your site for SEO + Answer Engine Optimization, generates `sitemap.xml` / `llms.txt` / `robots.txt`, finds keyword gaps, and tells your Claude / Cursor / ChatGPT Desktop exactly what to fix — all using your own AI credits.**
+> **The free MCP server that turns your Claude / Cursor / ChatGPT Desktop into a senior SEO + AEO consultant. Audits any URL, generates `sitemap.xml` / `llms.txt` / `robots.txt`, finds keyword gaps, and tells your AI exactly what to fix — all using your own AI credits, never ours.**
 
 [![MCP 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-orange)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm @ranki/mcp](https://img.shields.io/npm/v/@ranki/mcp.svg?label=%40ranki%2Fmcp)](https://www.npmjs.com/package/@ranki/mcp)
 [![mcp.ranki.io](https://img.shields.io/badge/live-mcp.ranki.io-black)](https://mcp.ranki.io)
 
-This is the open-source repository for the **Ranki.io Model Context Protocol server**. It plugs into Claude Code, Claude Desktop, Cursor, and any other MCP-capable client, adding 10 tools that diagnose SEO and AEO problems on any site and tell your AI exactly how to fix them — without spending a single token from us.
+You vibe-coded a site this weekend. It's beautiful. Nobody can find it.
 
-🚀 **Try it in 30 seconds:** add the snippet from [Install](#install) to your Claude config, then ask Claude *"audit my site for AEO and fix it"*.
+That's because Google + ChatGPT + Claude + Perplexity + Google AI Overviews can't figure out what your site is about — you have no `sitemap.xml`, no `llms.txt`, no FAQPage JSON-LD, no canonical tags, no `robots.txt` that explicitly invites AI crawlers. Every other SEO tool assumes you already know all those terms. **This one doesn't.**
+
+Ranki MCP plugs into Claude Code, Claude Desktop, Cursor, ChatGPT Desktop, and any other [Model Context Protocol](https://modelcontextprotocol.io)–capable client. It adds **10 tools** that diagnose SEO and AEO ("Answer Engine Optimization" — the new game) on any URL and tell your AI **exactly how to fix them**. Your Claude does the actual work, in your codebase, using your existing subscription. We never charge you a token.
+
+### 30-second try
+
+```bash
+# Add to ~/.claude/claude_desktop_config.json, then restart Claude Desktop
+{
+  "mcpServers": {
+    "ranki": {
+      "command": "npx",
+      "args": ["-y", "@ranki/mcp"],
+      "env": { "RANKI_API_KEY": "rk_live_..." }
+    }
+  }
+}
+```
+
+Then in any Claude conversation:
+
+> *"audit my site at https://myapp.dev for AEO and fix the failures in this repo"*
+
+Claude will call `audit_aeo`, get back a scorecard with 8 specific failures + fix recipes, edit the actual files in your codebase, re-run the audit, and confirm the score jumped. **You watch. You ship.**
+
+### What you'll get
+
+- **Indexed faster.** A starter kit of `robots.txt` + `sitemap.xml` + `llms.txt` + JSON-LD in the right spots — the four files most vibe-coded sites are missing.
+- **Cited by AI search.** Concrete FAQPage / Article schema, definitional intros, author bylines, answer-style headings — the structural signals ChatGPT and Claude actually use to pick citations.
+- **A content backlog.** Topic-discovery + keyword-gap tooling so you stop staring at an empty `/blog` directory wondering what to write.
+- **Zero new bills.** Free advisor tools (5 calls/IP/day) or unlimited with a [free Ranki.io API key](https://app.ranki.io/developer). Your AI editor pays for the inference; we pay for the advice.
 
 ---
 
