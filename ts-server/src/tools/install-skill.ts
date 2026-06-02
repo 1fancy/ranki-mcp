@@ -13,7 +13,7 @@ const SKILL_BASE = 'https://raw.githubusercontent.com/1fancy/ranki-seo-skills/ma
 const SNIPPETS: Record<string, { label: string; body: string }> = {
   one_liner: {
     label: 'One-line CLI (auto-detects your editor)',
-    body: 'npx @ranki/cli install',
+    body: 'npx @ranki.io/cli install',
   },
   claude_code: {
     label: 'Claude Code · Claude Desktop (user-level)',

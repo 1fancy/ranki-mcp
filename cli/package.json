@@ -1,5 +1,5 @@
 {
-  "name": "@ranki/cli",
+  "name": "@ranki.io/cli",
   "version": "0.1.0",
   "description": "One-line installer for the Ranki MCP server, Claude Skill and REST API across Claude Code, Claude Desktop, Cursor, Windsurf and ChatGPT Desktop.",
   "type": "module",

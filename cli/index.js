@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * @ranki/cli — one-line installer + updater for the Ranki MCP suite.
+ * @ranki.io/cli — one-line installer + updater for the Ranki MCP suite.
  *
- *   npx @ranki/cli install   # writes MCP config + Skill file for your AI editor
- *   npx @ranki/cli update    # re-pulls the latest Skill + bumps @ranki/mcp
- *   npx @ranki/cli check     # diagnoses your current setup
+ *   npx @ranki.io/cli install   # writes MCP config + Skill file for your AI editor
+ *   npx @ranki.io/cli update    # re-pulls the latest Skill + bumps @ranki.io/mcp
+ *   npx @ranki.io/cli check     # diagnoses your current setup
  *
  * Auto-detects which AI editor is installed on this machine and writes the
  * right config file in the right place. Falls back to interactive picker
@@ -57,7 +57,7 @@ const TARGETS = {
     },
     install: (key) => {
       try {
-        execSync(`claude mcp add ranki -e RANKI_API_KEY=${key} -- npx -y @ranki/mcp`, { stdio: 'inherit' });
+        execSync(`claude mcp add ranki -e RANKI_API_KEY=${key} -- npx -y @ranki.io/mcp`, { stdio: 'inherit' });
         return true;
       } catch { return false; }
     },
@@ -107,7 +107,7 @@ function writeStdioMcp(path, key) {
   existing.mcpServers = existing.mcpServers || {};
   existing.mcpServers.ranki = {
     command: 'npx',
-    args: ['-y', '@ranki/mcp'],
+    args: ['-y', '@ranki.io/mcp'],
     env: { RANKI_API_KEY: key },
   };
   mkdirSync(dirname(path), { recursive: true });
@@ -238,7 +238,7 @@ async function update() {
   header('Ranki — update Skill + MCP package');
   const targets = await detectAll();
   if (targets.length === 0) {
-    warn('No installed editors detected. Run `npx @ranki/cli install` first.');
+    warn('No installed editors detected. Run `npx @ranki.io/cli install` first.');
     return;
   }
   for (const k of targets) {
@@ -252,7 +252,7 @@ async function update() {
       }
     }
   }
-  log(`\n  ${c.dim}The MCP server itself uses npx -y @ranki/mcp, which auto-pulls latest on every launch.${c.reset}\n`);
+  log(`\n  ${c.dim}The MCP server itself uses npx -y @ranki.io/mcp, which auto-pulls latest on every launch.${c.reset}\n`);
 }
 
 async function check() {
@@ -296,7 +296,7 @@ async function check() {
 
 function help() {
   log(`
-  ${c.bold}@ranki/cli${c.reset} — one-line installer for Ranki MCP + Skill
+  ${c.bold}@ranki.io/cli${c.reset} — one-line installer for Ranki MCP + Skill
 
   ${c.bold}Commands${c.reset}
     install    Write MCP config + download Skill into your editor
@@ -306,13 +306,13 @@ function help() {
 
   ${c.bold}Examples${c.reset}
     ${c.dim}# Interactive install (auto-detects your editor):${c.reset}
-    npx @ranki/cli install
+    npx @ranki.io/cli install
 
     ${c.dim}# Update an existing install:${c.reset}
-    npx @ranki/cli update
+    npx @ranki.io/cli update
 
     ${c.dim}# Verify everything works:${c.reset}
-    RANKI_API_KEY=rk_live_... npx @ranki/cli check
+    RANKI_API_KEY=rk_live_... npx @ranki.io/cli check
 
   ${c.bold}Docs${c.reset}  https://mcp.ranki.io
   ${c.bold}Source${c.reset}  https://github.com/1fancy/seo-aeo-audit-mcp-ranki

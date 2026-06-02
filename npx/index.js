@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * @ranki/mcp — thin Node.js shim that proxies stdio JSON-RPC to the hosted
+ * @ranki.io/mcp — thin Node.js shim that proxies stdio JSON-RPC to the hosted
  * Ranki.io MCP server at https://mcp.ranki.io. Vibe-coders install via:
  *
  *   { "mcpServers": { "ranki": {
  *       "command": "npx",
- *       "args": ["-y", "@ranki/mcp"],
+ *       "args": ["-y", "@ranki.io/mcp"],
  *       "env": { "RANKI_API_KEY": "rk_live_..." }
  *   } } }
  *

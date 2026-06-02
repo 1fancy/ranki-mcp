@@ -1,4 +1,4 @@
-# @ranki/mcp
+# @ranki.io/mcp
 
 The Ranki.io MCP server — adds SEO + AEO tools to Claude Code, Claude Desktop, and Cursor. Audit your site, generate `sitemap.xml` / `llms.txt` / `robots.txt`, and pull your Ranki.io articles into your editor — all using **your** Claude credits.
 
@@ -13,7 +13,7 @@ Add to `~/.claude/claude_desktop_config.json`:
   "mcpServers": {
     "ranki": {
       "command": "npx",
-      "args": ["-y", "@ranki/mcp"],
+      "args": ["-y", "@ranki.io/mcp"],
       "env": { "RANKI_API_KEY": "rk_live_..." }
     }
   }

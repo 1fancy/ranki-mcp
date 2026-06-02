@@ -1,5 +1,5 @@
 {
-  "name": "@ranki/mcp-ts",
+  "name": "@ranki.io/mcp-ts",
   "version": "0.1.0",
   "description": "Ranki MCP — Node/TypeScript reference implementation. Free SEO + AEO + speed + image-optimization tools for Claude Code, Cursor, Windsurf, ChatGPT Desktop and any MCP-capable agent.",
   "type": "module",

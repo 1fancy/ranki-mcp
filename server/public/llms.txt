@@ -19,7 +19,7 @@ The MCP server returns deterministic structured advice — checklists, fix recip
 ## One-line install
 
 ```bash
-npx @ranki/cli install
+npx @ranki.io/cli install
 ```
 
 Auto-detects Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop. Writes the right MCP config in the right place. Downloads the Skill file.
@@ -47,7 +47,7 @@ Three bridge tools (Ranki.io API key required):
 
 ## Compatible clients
 
-Stdio transport (use `npx -y @ranki/mcp`):
+Stdio transport (use `npx -y @ranki.io/mcp`):
 - Claude Code
 - Claude Desktop
 - ChatGPT Desktop (Developer mode)

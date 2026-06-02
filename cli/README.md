@@ -1,9 +1,9 @@
-# @ranki/cli
+# @ranki.io/cli
 
 One command that wires the Ranki MCP server, the Claude Skill, and the REST API into whatever AI editor you're using.
 
 ```bash
-npx @ranki/cli install
+npx @ranki.io/cli install
 ```
 
 Auto-detects Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop. Writes the right config in the right place. Downloads the Skill file. Done.
@@ -11,10 +11,10 @@ Auto-detects Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop. Wri
 ## Commands
 
 ```bash
-npx @ranki/cli install   # write MCP config + download Skill
-npx @ranki/cli update    # refresh Skill; MCP auto-updates on next launch
-npx @ranki/cli check     # verify your setup works
-npx @ranki/cli help      # print help
+npx @ranki.io/cli install   # write MCP config + download Skill
+npx @ranki.io/cli update    # refresh Skill; MCP auto-updates on next launch
+npx @ranki.io/cli check     # verify your setup works
+npx @ranki.io/cli help      # print help
 ```
 
 ## API key

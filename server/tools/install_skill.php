@@ -68,7 +68,7 @@ return function (array $args, string $apiKey): array {
 
     $out = "## Install the Ranki SEO + AEO Skill\n\n";
     $out .= "The Skill is a Markdown playbook for your AI. It auto-activates when you mention SEO, AEO, sitemap, llms.txt, ranking, schema, or \"why isn't ChatGPT citing my docs.\" It tells your AI when to call each Ranki MCP tool, in what order, and how to apply the fixes to your codebase.\n\n";
-    $out .= "**Prerequisite:** the Ranki MCP server must be configured in your client first (`mcp.ranki.io` HTTP or `npx -y @ranki/mcp` stdio). The Skill orchestrates the MCP tools.\n\n";
+    $out .= "**Prerequisite:** the Ranki MCP server must be configured in your client first (`mcp.ranki.io` HTTP or `npx -y @ranki.io/mcp` stdio). The Skill orchestrates the MCP tools.\n\n";
     $out .= "---\n\n";
 
     foreach ($blocks as $key => $b) {

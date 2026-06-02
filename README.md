@@ -4,17 +4,17 @@
 
 [![MCP 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-orange)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![npm @ranki/mcp](https://img.shields.io/npm/v/@ranki/mcp.svg?label=%40ranki%2Fmcp)](https://www.npmjs.com/package/@ranki/mcp)
+[![npm @ranki.io/mcp](https://img.shields.io/npm/v/@ranki.io/mcp.svg?label=%40ranki%2Fmcp)](https://www.npmjs.com/package/@ranki.io/mcp)
 [![live mcp.ranki.io](https://img.shields.io/badge/live-mcp.ranki.io-black)](https://mcp.ranki.io)
 [![Skill repo](https://img.shields.io/badge/companion-ranki--seo--skills-orange)](https://github.com/1fancy/ranki-seo-skills)
 
 ## Install in one line
 
 ```bash
-npx @ranki/cli install
+npx @ranki.io/cli install
 ```
 
-The CLI auto-detects which AI editor you have installed (Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop), writes the right MCP config in the right place and downloads the companion Skill file from the [ranki-seo-skills repo](https://github.com/1fancy/ranki-seo-skills). Re-run `npx @ranki/cli update` later to refresh the Skill; `npx @ranki/cli check` verifies the setup.
+The CLI auto-detects which AI editor you have installed (Claude Code, Claude Desktop, Cursor, Windsurf, ChatGPT Desktop), writes the right MCP config in the right place and downloads the companion Skill file from the [ranki-seo-skills repo](https://github.com/1fancy/ranki-seo-skills). Re-run `npx @ranki.io/cli update` later to refresh the Skill; `npx @ranki.io/cli check` verifies the setup.
 
 Prefer the manual JSON snippet? Examples for each editor are in the [Install](#install) section below.
 
@@ -23,7 +23,7 @@ Prefer the manual JSON snippet? Examples for each editor are in the [Install](#i
 This repo ships the MCP in **two parity implementations** so you can pick whichever fits your stack:
 
 - **[`server/`](server) — PHP 8.4 reference**, the production deployment powering [`mcp.ranki.io`](https://mcp.ranki.io). Hosted, hardened, zero dependencies, runs behind Cloudflare. This is what `mcp.ranki.io` is built on.
-- **[`ts-server/`](ts-server) — Node / TypeScript reference**, published as [`@ranki/mcp-ts`](https://www.npmjs.com/package/@ranki/mcp-ts) on npm. Native-Node alternative for developers who prefer JavaScript tooling, can be installed via `npx -y @ranki/mcp-ts` (stdio) or `npx @ranki/mcp-ts --serve` (HTTP).
+- **[`ts-server/`](ts-server) — Node / TypeScript reference**, published as [`@ranki.io/mcp-ts`](https://www.npmjs.com/package/@ranki.io/mcp-ts) on npm. Native-Node alternative for developers who prefer JavaScript tooling, can be installed via `npx -y @ranki.io/mcp-ts` (stdio) or `npx @ranki.io/mcp-ts --serve` (HTTP).
 
 Both expose the same 22 tools with the same JSON output, SSRF guard, rate-limit semantics, and security posture. The TS impl runs the 15 free tools natively in Node, and proxies the 7 paid bridge tools to the same REST API at `app.ranki.io` that the PHP server uses. Neither ever opens a database — paid tools go through Laravel's `ApiKeyAuth` middleware and are scoped to the calling user's data.
 
@@ -112,7 +112,7 @@ Add to `~/.claude/claude_desktop_config.json`:
   "mcpServers": {
     "ranki": {
       "command": "npx",
-      "args": ["-y", "@ranki/mcp"],
+      "args": ["-y", "@ranki.io/mcp"],
       "env": { "RANKI_API_KEY": "rk_live_..." }
     }
   }
@@ -233,7 +233,7 @@ Claude (via Ranki MCP):
 
 ### Two transports
 
-- **stdio** (Claude Desktop, Claude Code, most MCP clients) — install the [`@ranki/mcp`](npx/) npm package, which is a 50-line Node.js shim that proxies stdio JSON-RPC to `https://mcp.ranki.io`.
+- **stdio** (Claude Desktop, Claude Code, most MCP clients) — install the [`@ranki.io/mcp`](npx/) npm package, which is a 50-line Node.js shim that proxies stdio JSON-RPC to `https://mcp.ranki.io`.
 - **HTTP** (Cursor, custom clients) — point at `https://mcp.ranki.io` directly. No Node install needed.
 
 ### Repository layout
@@ -258,7 +258,7 @@ ranki-mcp/
 │       ├── generate_robots_txt.php
 │       ├── list_projects.php
 │       └── get_article.php
-└── npx/                        # Node.js stdio shim (published as @ranki/mcp)
+└── npx/                        # Node.js stdio shim (published as @ranki.io/mcp)
     ├── package.json
     ├── index.js                #   ~50 lines: stdin→POST→stdout
     └── README.md

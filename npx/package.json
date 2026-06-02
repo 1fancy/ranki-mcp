@@ -1,5 +1,5 @@
 {
-  "name": "@ranki/mcp",
+  "name": "@ranki.io/mcp",
   "version": "0.1.0",
   "description": "Ranki.io MCP server — SEO + AEO advisor for Claude Code, Claude Desktop, Cursor. Audits sites, generates sitemap.xml/llms.txt/robots.txt, and bridges your Ranki.io account.",
   "type": "module",

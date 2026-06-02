@@ -5,7 +5,7 @@
  * Two modes:
  *   1. stdio (default) — for Claude Code, Claude Desktop, ChatGPT Desktop
  *      and any local MCP client that spawns the server as a subprocess.
- *      This is what `npx -y @ranki/mcp-ts` does.
+ *      This is what `npx -y @ranki.io/mcp-ts` does.
  *
  *   2. HTTP (--serve) — runs a JSON-RPC 2.0 HTTP server with the same
  *      security guards as the PHP impl on mcp.ranki.io. For Cursor /
@@ -49,14 +49,14 @@ function printHelp(): void {
   console.log(`Ranki MCP (TypeScript) — SEO + AEO tools for AI editors
 
 Usage:
-  npx @ranki/mcp-ts                       Run as stdio MCP server (default — for
+  npx @ranki.io/mcp-ts                       Run as stdio MCP server (default — for
                                           Claude Code, Claude Desktop, ChatGPT
                                           Desktop, generic MCP clients).
-  npx @ranki/mcp-ts --serve [--port N]    Run as HTTP JSON-RPC server (default
+  npx @ranki.io/mcp-ts --serve [--port N]    Run as HTTP JSON-RPC server (default
                                           port 8787; bind to 127.0.0.1 — set
                                           RANKI_MCP_HOST=0.0.0.0 to expose).
-  npx @ranki/mcp-ts --version             Print version.
-  npx @ranki/mcp-ts --help                This help.
+  npx @ranki.io/mcp-ts --version             Print version.
+  npx @ranki.io/mcp-ts --help                This help.
 
 Environment:
   RANKI_API_KEY            API key from app.ranki.io/developer. Required for

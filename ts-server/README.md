@@ -1,6 +1,6 @@
-# @ranki/mcp-ts — Ranki MCP, Node/TypeScript edition
+# @ranki.io/mcp-ts — Ranki MCP, Node/TypeScript edition
 
-[![npm](https://img.shields.io/npm/v/@ranki/mcp-ts.svg)](https://www.npmjs.com/package/@ranki/mcp-ts)
+[![npm](https://img.shields.io/npm/v/@ranki.io/mcp-ts.svg)](https://www.npmjs.com/package/@ranki.io/mcp-ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 [![MCP 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-orange)](https://modelcontextprotocol.io)
 
@@ -21,7 +21,7 @@ Lighthouse 42 → 96 in one conversation. AEO 38 → 96 in the same session. No 
 ### One-line install (recommended)
 
 ```bash
-npx @ranki/cli install
+npx @ranki.io/cli install
 ```
 
 This installs both the MCP and the [companion Skill](https://github.com/1fancy/ranki-seo-skills) into whichever editor you have (Claude Code / Claude Desktop / Cursor / Windsurf / ChatGPT Desktop) and chooses the right MCP backend automatically.
@@ -35,7 +35,7 @@ For Claude Desktop, Claude Code or ChatGPT Desktop. Add this to your client's MC
   "mcpServers": {
     "ranki": {
       "command": "npx",
-      "args": ["-y", "@ranki/mcp-ts"],
+      "args": ["-y", "@ranki.io/mcp-ts"],
       "env": {
         "RANKI_API_KEY": "rk_live_..."
       }
@@ -51,7 +51,7 @@ The `RANKI_API_KEY` env var is **optional** — only the 7 paid bridge tools nee
 For Cursor, Windsurf, Claude.ai web, or any client that talks to MCP over HTTP:
 
 ```bash
-npx @ranki/mcp-ts --serve --port 8787
+npx @ranki.io/mcp-ts --serve --port 8787
 # point your client at http://127.0.0.1:8787 with X-API-Key header
 ```
 
